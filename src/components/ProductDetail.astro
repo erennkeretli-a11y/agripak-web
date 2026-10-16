@@ -11,7 +11,7 @@ const related = products.filter((x) => x !== p).slice(0, 3);
 const formLabel = p.formShort[lang];
 const docs = ['prod.tds', 'prod.sds', 'prod.coa', 'prod.label'] as const;
 ---
-<Base lang={lang} title={`${p.name} · ${formLabel}`} description={p.intro[lang]} paths={paths} current="products" ogImage={p.image.replace(/^\//, '')}>
+<Base lang={lang} title={`${p.name} · ${formLabel}`} description={p.intro[lang]} paths={paths} current="products">
   <section class="page-hero">
     <div class="container">
       <nav class="breadcrumb" aria-label="Breadcrumb">

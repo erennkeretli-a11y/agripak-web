@@ -38,7 +38,16 @@ const org = {
     <meta property="og:description" content={desc} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={{ tr: 'tr_TR', en: 'en_US', ru: 'ru_RU' }[lang]} />
-    <meta property="og:image" content={site + u(ogImage ?? 'img/photo/hero_greenhouse.jpg')} />
+    <meta property="og:image" content={site + u(ogImage ?? `img/og/og-${lang}.jpg`)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="AgriPak Kimya · iGrow" />
+    <meta property="og:site_name" content="AgriPak Kimya" />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={desc} />
+    <meta name="twitter:image" content={site + u(ogImage ?? `img/og/og-${lang}.jpg`)} />
     <link rel="preload" href={u('fonts/manrope-latin.woff2')} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={u('fonts/manrope-latin-ext.woff2')} as="font" type="font/woff2" crossorigin />
     {lang === 'ru' && <link rel="preload" href={u('fonts/manrope-cyrillic.woff2')} as="font" type="font/woff2" crossorigin />}
