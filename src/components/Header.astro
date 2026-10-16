@@ -1,5 +1,5 @@
 ---
-import { t, route, langs, type Lang, type Paths } from '../i18n/ui';
+import { t, route, langs, langNames, WA, type Lang, type Paths } from '../i18n/ui';
 import { u } from '../lib/url';
 import Icon from './Icon.astro';
 interface Props { lang: Lang; paths: Paths; current?: string }
@@ -11,30 +11,30 @@ const nav = [
   ['growtech', t(lang, 'nav.growtech')],
   ['contact', t(lang, 'nav.contact')],
 ] as const;
-const WA = 'https://wa.me/905306337527';
 ---
+<a class="skip" href="#main">{t(lang, 'a11y.skip')}</a>
 <header class="site-header" id="top">
   <div class="container bar">
     <a class="brand" href={u(route(lang, 'home'))} aria-label="AgriPak Kimya">
-      <img src={u('img/brand/agripak-mark.svg')} alt="" width="48" height="36" />
-      <span class="brand-text"><b>Agri<em>Pak</em></b><span>Kimya</span></span>
+      <img src={u('img/brand/agripak-mark.svg')} alt="" width="48" height="36" class="brand-mark" />
+      <img src={u('img/brand/agripak-wordmark.svg')} alt="AgriPak Kimya" width="140" height="48" class="brand-word" />
     </a>
-    <nav class="nav" aria-label="Main">
+    <nav class="nav" aria-label={t(lang, 'a11y.nav')}>
       {nav.map(([key, label]) => (
         <a href={u(route(lang, key))} aria-current={current === key ? 'page' : undefined}>{label}</a>
       ))}
     </nav>
     <div class="header-actions">
-      <div class="lang" aria-label="Language">
+      <div class="lang" role="group" aria-label={t(lang, 'a11y.lang')}>
         {langs.map((l) => (
-          <a href={u(paths[l])} aria-current={l === lang ? 'true' : undefined} lang={l} hreflang={l}>{l.toUpperCase()}</a>
+          <a href={u(paths[l])} aria-current={l === lang ? 'true' : undefined} lang={l} hreflang={l} aria-label={langNames[l]} title={langNames[l]}>{l.toUpperCase()}</a>
         ))}
       </div>
       <a class="btn btn-dark" href={WA} target="_blank" rel="noopener" style="display:none" data-desktop-only><Icon name="wa" />{t(lang, 'nav.wa')}</a>
-      <button class="menu-btn" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menu" data-menu><Icon name="menu" /></button>
+      <button class="menu-btn" aria-expanded="false" aria-controls="mobile-nav" aria-label={t(lang, 'a11y.menu')} data-menu><Icon name="menu" /></button>
     </div>
   </div>
-  <nav class="container mobile-nav" id="mobile-nav" hidden>
+  <nav class="container mobile-nav" id="mobile-nav" hidden aria-label={t(lang, 'a11y.nav')}>
     {nav.map(([key, label]) => (<a href={u(route(lang, key))}>{label}</a>))}
     <a class="btn btn-wa" href={WA} target="_blank" rel="noopener"><Icon name="wa" />{t(lang, 'nav.wa')} · +90 530 633 75 27</a>
   </nav>

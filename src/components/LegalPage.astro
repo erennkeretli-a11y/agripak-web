@@ -7,33 +7,33 @@ const { lang } = Astro.props;
 const paths = routePaths('legal');
 const content = {
   tr: {
-    title: 'KVKK Aydınlatma Metni ve Gizlilik',
+    title: 'KVKK Aydınlatma Metni',
     sections: [
       ['Veri sorumlusu', 'AGRİPAK KİMYA ANONİM ŞİRKETİ (Güzeloba Mah. Çağlayangil Cad. No: 3B Muratpaşa / Antalya, MERSİS 0009178097300001), 6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında veri sorumlusudur.'],
-      ['İşlenen veriler ve amaç', 'İletişim formu, e-posta veya WhatsApp üzerinden ilettiğiniz ad soyad, firma, telefon, e-posta, bitki ve alan bilgileri; teklif hazırlama, numune gönderimi, bayilik değerlendirmesi ve teknik destek amaçlarıyla, sözleşmenin kurulması ve meşru menfaat hukuki sebeplerine dayanarak işlenir.'],
-      ['Aktarım', 'Veriler yalnızca hizmetin gerektirdiği ölçüde kargo, muhasebe ve bilgi teknolojileri tedarikçileriyle paylaşılır. İletişim formu altyapısı yurt dışında barındırılan bir servis tarafından sağlanmaktadır; formu göndererek bu aktarımı kabul etmiş olursunuz.'],
-      ['Çerezler', 'Bu site üçüncü taraf reklam veya izleme çerezi kullanmaz. Yalnızca sitenin çalışması için zorunlu teknik çerezler kullanılabilir.'],
-      ['Haklarınız', 'KVKK madde 11 kapsamındaki haklarınızı erengm@agripak.pro adresine yazarak kullanabilirsiniz. Başvurular en geç 30 gün içinde yanıtlanır.'],
+      ['İşlenen veriler ve amaç', 'İletişim kanallarımız (telefon, WhatsApp, e-posta) üzerinden ilettiğiniz kimlik ve iletişim bilgileri ile mesaj içeriği, talebinizi değerlendirmek ve size yanıt vermek amacıyla işlenir. Hukuki sebep, talebinizin yanıtlanmasına yönelik meşru menfaat ve talebinizin niteliğine göre sözleşme öncesi görüşmelerin yürütülmesidir.'],
+      ['Aktarım', 'Verileriniz yalnızca talebinizin yanıtlanması için gerekli olduğu ölçüde işlenir. Telefon, WhatsApp veya e-posta üzerinden iletişim kurduğunuzda, kullandığınız kanalın hizmet sağlayıcısı da kendi hizmeti kapsamında kişisel veri işleyebilir. Bu sitede şu anda bir iletişim formu bulunmamaktadır.'],
+      ['Çerezler ve üçüncü taraf içerik', 'Bu site izleme veya reklam çerezi kullanmaz. İletişim sayfasındaki Google haritası yalnızca siz yüklemeyi seçtiğinizde yüklenir; yüklendiğinde Google ile bağlantı kurulur ve Google’ın kendi gizlilik koşulları geçerli olur.'],
+      ['Haklarınız', 'KVKK’nın 11. maddesi kapsamındaki taleplerinizi, Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında Tebliğ’de belirtilen yöntemlerle iletebilirsiniz. Başvurulara ilişkin iletişim adresimiz erengm@agripak.pro’dur. Başvurular, talebin niteliğine göre en kısa sürede ve başvuru tarihinden itibaren en geç 30 gün içinde sonuçlandırılır.'],
     ],
   },
   en: {
     title: 'Privacy Notice',
     sections: [
       ['Data controller', 'AGRİPAK KİMYA ANONİM ŞİRKETİ (Güzeloba Mah. Çağlayangil Cad. No: 3B Muratpaşa / Antalya, MERSİS 0009178097300001) is the data controller under the Turkish Personal Data Protection Law No. 6698.'],
-      ['Data processed and purpose', 'Name, company, phone, e-mail, crop and area details you send through the contact form, e-mail or WhatsApp are processed for preparing quotes, sending samples, evaluating dealerships and providing technical support, based on the conclusion of a contract and legitimate interest.'],
-      ['Transfers', 'Data is shared only to the extent required with courier, accounting and IT suppliers. The contact form infrastructure is provided by a service hosted abroad; by submitting the form you accept this transfer.'],
-      ['Cookies', 'This site does not use third party advertising or tracking cookies. Only technical cookies strictly necessary for the site to function may be used.'],
-      ['Your rights', 'You can exercise your rights under Article 11 of the Law by writing to erengm@agripak.pro. Requests are answered within 30 days at the latest.'],
+      ['Data processed and purpose', 'Identity and contact details and the content of your message, sent through our contact channels (phone, WhatsApp, email), are processed in order to assess and respond to your enquiry. The legal basis is our legitimate interest in responding to your enquiry and, depending on its nature, the conduct of pre-contractual discussions.'],
+      ['Transfers', 'Your data is processed only to the extent necessary to respond to your enquiry. When you contact us by phone, WhatsApp or email, the provider of the communication service you use may also process personal data as part of that service. There is currently no contact form on this site.'],
+      ['Cookies and third-party content', 'This site does not use tracking or advertising cookies. The Google map on the contact page loads only when you choose to load it; once loaded, a connection to Google is established and Google’s own privacy terms apply.'],
+      ['Your rights', 'You may submit requests concerning your rights under Article 11 of Law No. 6698 using the methods specified in the Communiqué on the Procedures and Principles of Application to the Data Controller. Our contact address for these requests is erengm@agripak.pro. Requests are resolved as soon as possible, depending on their nature, and no later than 30 days from the date of application.'],
     ],
   },
   ru: {
-    title: 'Уведомление о персональных данных',
+    title: 'Уведомление об обработке персональных данных',
     sections: [
       ['Оператор данных', 'AGRİPAK KİMYA ANONİM ŞİRKETİ (Güzeloba Mah. Çağlayangil Cad. No: 3B Muratpaşa / Antalya, MERSİS 0009178097300001) является оператором персональных данных в соответствии с Законом Турции № 6698 о защите персональных данных.'],
-      ['Обрабатываемые данные и цели', 'Имя, компания, телефон, электронная почта, культура и площадь, которые вы передаёте через форму обратной связи, электронную почту или WhatsApp, обрабатываются для подготовки предложений, отправки образцов, оценки дилерства и технической поддержки на основании заключения договора и законного интереса.'],
-      ['Передача', 'Данные передаются только в необходимом объёме курьерским, бухгалтерским и ИТ-поставщикам. Инфраструктура формы обратной связи предоставляется сервисом, размещённым за рубежом; отправляя форму, вы соглашаетесь с такой передачей.'],
-      ['Файлы cookie', 'Сайт не использует сторонние рекламные или отслеживающие cookie. Могут использоваться только технические cookie, необходимые для работы сайта.'],
-      ['Ваши права', 'Права, предусмотренные статьёй 11 Закона, можно реализовать, написав на erengm@agripak.pro. Ответ предоставляется не позднее 30 дней.'],
+      ['Обрабатываемые данные и цели', 'Идентификационные и контактные данные, а также содержание сообщения, переданные через наши каналы связи (телефон, WhatsApp, электронная почта), обрабатываются для рассмотрения вашего обращения и ответа на него. Правовое основание — законный интерес в ответе на обращение и, в зависимости от его характера, ведение преддоговорных переговоров.'],
+      ['Передача', 'Ваши данные обрабатываются только в объёме, необходимом для ответа на обращение. При обращении по телефону, через WhatsApp или по электронной почте поставщик выбранного сервиса связи также может обрабатывать персональные данные в рамках своей услуги. В настоящее время на сайте нет формы обратной связи.'],
+      ['Файлы cookie и сторонний контент', 'Сайт не использует отслеживающие или рекламные cookie. Карта Google на странице контактов загружается только по вашему выбору; при загрузке устанавливается соединение с Google и действуют условия конфиденциальности Google.'],
+      ['Ваши права', 'Запросы об осуществлении прав, предусмотренных статьёй 11 Закона № 6698, можно направить способами, установленными турецким Положением о порядке обращения к лицу, ответственному за обработку персональных данных. Контактный адрес по таким обращениям — erengm@agripak.pro. Обращения рассматриваются в кратчайший срок с учётом характера запроса, но не позднее 30 дней со дня подачи обращения.'],
     ],
   },
 } as const;
@@ -42,7 +42,7 @@ const c = content[lang];
 <Base lang={lang} title={c.title} paths={paths}>
   <section class="page-hero">
     <div class="container">
-      <nav class="breadcrumb"><a href={u(route(lang, 'home'))}>{t(lang, 'crumb.home')}</a><span>/</span><span>{c.title}</span></nav>
+      <nav class="breadcrumb" aria-label={t(lang, 'a11y.crumb')}><a href={u(route(lang, 'home'))}>{t(lang, 'crumb.home')}</a><span>/</span><span>{c.title}</span></nav>
       <h1 class="reveal">{c.title}</h1>
     </div>
   </section>

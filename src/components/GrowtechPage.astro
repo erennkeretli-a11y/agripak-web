@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from './Icon.astro';
-import { t, route, routePaths, type Lang } from '../i18n/ui';
+import { t, route, routePaths, MAIL, type Lang } from '../i18n/ui';
 import { u } from '../lib/url';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -9,46 +9,47 @@ const paths = routePaths('growtech');
 const title = 'Growtech Antalya 2026';
 const content = {
   tr: {
-    lead: '25. Uluslararası Sera, Tarım Teknolojileri ve Hayvancılık Ekipmanları Fuarı. 24–27 Kasım 2026, Anfaş Expo Center, Antalya. Ligno OÜ ve AgriPak Kimya ortak standı: 3-H130.',
-    h1: 'Stantta sizi neler bekliyor',
+    lead: 'Growtech Antalya 24–27 Kasım 2026’da ANFAŞ Expo Center’da düzenleniyor. Ligno OÜ ve AgriPak Kimya ile 3-H130 numaralı stantta görüşmek için bize ulaşın.',
+    h1: 'Stantta neler konuşabiliriz',
     items: [
-      ['Ürün vitrini', 'iGrow Revive kuru ve sıvı, M5 Micromix, Boron Plus, iGrow V, Alga ve LignoGro ambalajları ve teknik föyleri.'],
-      ['Uzman görüşmesi', 'Ligno OÜ ürün geliştirme ekibi ve AgriPak ziraat mühendisleriyle bitkinize özel uygulama programı.'],
-      ['Deneme sonuçları', 'Farklı ülkelerden saha denemeleri ve sera uygulama verileri, metodolojisiyle birlikte.'],
-      ['Bayilik görüşmeleri', 'Akdeniz ve Ege bölgeleri için bayi ağı, stok ve destek modeli. Randevu için önceden yazın.'],
+      ['Ürünleri tanıma', 'Ligno OÜ portföyünü ve Türkiye pazarına hazırlanan ilk ürünleri birlikte ele alalım.'],
+      ['Ekiple görüşme', 'Stantta Ligno OÜ ve AgriPak Kimya temsilcileriyle iş birliği konularını görüşebilirsiniz.'],
+      ['Teknik sorular', 'İlgilendiğiniz ürünleri önceden bildirirseniz mevcut belgeleri hazır bulunduralım.'],
+      ['Bayilik iş birliği', 'Türkiye pazarı için olası iş birliği modellerini konuşalım. Görüşme saatini önceden kararlaştırmak en iyisi.'],
     ],
     h2: 'Pratik bilgiler',
-    info: [['Tarih', '24–27 Kasım 2026'], ['Yer', 'Anfaş Expo Center, Antalya'], ['Salon / Stant', '3-H130'], ['Randevu', 'sales@agripak.pro · +90 530 633 75 27']],
-    cta: 'Davetiye isteyin',
+    info: [['Tarih', '24–27 Kasım 2026'], ['Yer', 'ANFAŞ Expo Center, Antalya'], ['Stant', '3-H130'], ['Randevu', 'sales@agripak.pro · +90 530 633 75 27']],
+    cta: 'Görüşme talep edin',
   },
   en: {
-    lead: '25th International Greenhouse, Agricultural Technologies and Livestock Equipment Exhibition. 24–27 November 2026, Anfaş Expo Center, Antalya. Joint Ligno OÜ and AgriPak Kimya booth: 3-H130.',
-    h1: 'What awaits you at the booth',
+    lead: 'Growtech Antalya takes place at ANFAŞ Expo Center on 24–27 November 2026. Contact us to arrange a meeting with Ligno OÜ and AgriPak Kimya at stand 3-H130.',
+    h1: 'What we can discuss at the stand',
     items: [
-      ['Product showcase', 'iGrow Revive dry and liquid, M5 Micromix, Boron Plus, iGrow V, Alga and LignoGro packaging and data sheets.'],
-      ['Expert meetings', 'A crop specific application programme with the Ligno OÜ product development team and AgriPak agronomists.'],
-      ['Trial results', 'Field trials from different countries and greenhouse application data, with methodology.'],
-      ['Dealership talks', 'Dealer network, stock and support model for the Mediterranean and Aegean regions. Write ahead for an appointment.'],
+      ['Getting to know the products', 'Let us go through the Ligno OÜ portfolio and the first products being prepared for the Turkish market.'],
+      ['Meeting the team', 'Cooperation topics can be discussed with representatives of Ligno OÜ and AgriPak Kimya at the stand.'],
+      ['Technical questions', 'Let us know in advance which products interest you so that we can have the available documentation ready.'],
+      ['Distribution partnership', 'Let us discuss possible cooperation models for the Turkish market. It is best to agree on a meeting time in advance.'],
     ],
     h2: 'Practical information',
-    info: [['Dates', '24–27 November 2026'], ['Venue', 'Anfaş Expo Center, Antalya'], ['Hall / Booth', '3-H130'], ['Appointments', 'sales@agripak.pro · +90 530 633 75 27']],
-    cta: 'Request an invitation',
+    info: [['Dates', '24–27 November 2026'], ['Venue', 'ANFAŞ Expo Center, Antalya'], ['Stand', '3-H130'], ['Appointments', 'sales@agripak.pro · +90 530 633 75 27']],
+    cta: 'Request a meeting',
   },
   ru: {
-    lead: '25-я Международная выставка тепличных и сельскохозяйственных технологий и животноводческого оборудования. 24–27 ноября 2026, Anfaş Expo Center, Анталия. Совместный стенд Ligno OÜ и AgriPak Kimya: 3-H130.',
-    h1: 'Что ждёт вас на стенде',
+    lead: 'Выставка Growtech Antalya пройдёт 24–27 ноября 2026 года в ANFAŞ Expo Center. Свяжитесь с нами, чтобы договориться о встрече с Ligno OÜ и AgriPak Kimya на стенде 3-H130.',
+    h1: 'Что можно обсудить на стенде',
     items: [
-      ['Витрина продукции', 'Упаковки и технические листы iGrow Revive сухой и жидкий, M5 Micromix, Boron Plus, iGrow V, Alga и LignoGro.'],
-      ['Встречи с экспертами', 'Схема применения под вашу культуру вместе с командой разработки Ligno OÜ и агрономами AgriPak.'],
-      ['Результаты испытаний', 'Полевые испытания из разных стран и данные применения в теплицах, с методикой.'],
-      ['Переговоры о дилерстве', 'Дилерская сеть, склад и модель поддержки для средиземноморского и эгейского регионов. Для встречи напишите заранее.'],
+      ['Знакомство с продукцией', 'Обсудим ассортимент Ligno OÜ и подготовку первых продуктов к выходу на рынок Турции.'],
+      ['Встреча с командой', 'На стенде можно будет обсудить вопросы сотрудничества с представителями Ligno OÜ и AgriPak Kimya.'],
+      ['Технические вопросы', 'Сообщите заранее, какие продукты вас интересуют, чтобы мы могли подготовить доступную документацию.'],
+      ['Дилерское сотрудничество', 'Обсудим возможные форматы сотрудничества на турецком рынке. О времени встречи лучше договориться заранее.'],
     ],
     h2: 'Практическая информация',
-    info: [['Даты', '24–27 ноября 2026'], ['Место', 'Anfaş Expo Center, Анталия'], ['Зал / стенд', '3-H130'], ['Встречи', 'sales@agripak.pro · +90 530 633 75 27']],
-    cta: 'Запросить приглашение',
+    info: [['Даты', '24–27 ноября 2026'], ['Место', 'ANFAŞ Expo Center, Анталия'], ['Стенд', '3-H130'], ['Встречи', 'sales@agripak.pro · +90 530 633 75 27']],
+    cta: 'Договориться о встрече',
   },
 } as const;
 const c = content[lang];
+const mailto = `mailto:${MAIL}?subject=${encodeURIComponent(t(lang, 'contact.subject.growtech'))}`;
 ---
 <Base lang={lang} title={title} description={c.lead} paths={paths} current="growtech">
   <section class="hero" style="min-height:min(70dvh,44rem)">
@@ -59,14 +60,15 @@ const c = content[lang];
       <span class="hero-badge reveal"><i>3-H130</i>{t(lang, 'gt.date')}</span>
       <h1 class="reveal" style="--d:120ms; font-size:var(--step-4)">{title}</h1>
       <p class="lead reveal" style="--d:220ms">{c.lead}</p>
-      <div class="hero-actions reveal" style="--d:320ms"><a class="btn btn-primary" href={u(route(lang, 'contact'))}>{c.cta}<Icon name="arrow" /></a></div>
+      <div class="hero-actions reveal" style="--d:320ms"><a class="btn btn-primary" href={mailto}>{c.cta}<Icon name="arrow" /></a></div>
     </div>
+    <span class="img-tag">{t(lang, 'img.illustrative')}</span>
   </section>
   <section class="section">
     <div class="container">
       <div class="section-head reveal"><h2>{c.h1}</h2></div>
       <div class="grid grid-2">
-        {c.items.map(([h, d], i) => (<article class="card reveal" style={`--d:${i * 80}ms`}><span class="icon"><Icon name={['leaf', 'phone', 'lab', 'globe'][i]} /></span><h3>{h}</h3><p>{d}</p></article>))}
+        {c.items.map(([h, d], i) => (<article class="card reveal" style={`--d:${i * 80}ms`}><span class="icon"><Icon name={['leaf', 'phone', 'doc', 'globe'][i]} /></span><h3>{h}</h3><p>{d}</p></article>))}
       </div>
     </div>
   </section>
@@ -77,7 +79,8 @@ const c = content[lang];
         <table class="spec" style="background:#fff"><tbody>{c.info.map(([k, v]) => (<tr><th>{k}</th><td>{v}</td></tr>))}</tbody></table>
       </div>
       <div class="media wide reveal-scale">
-        <picture><source srcset={u('img/photo/aerial_antalya.webp')} type="image/webp" /><img src={u('img/photo/aerial_antalya.jpg')} alt="Antalya" width="1536" height="864" loading="lazy" /></picture>
+        <picture><source srcset={u('img/photo/aerial_antalya.webp')} type="image/webp" /><img src={u('img/photo/aerial_antalya.jpg')} alt={t(lang, 'img.illustrative')} width="1536" height="864" loading="lazy" /></picture>
+        <span class="caption">{t(lang, 'img.illustrative')}</span>
       </div>
     </div>
   </section>

@@ -1,50 +1,56 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from './Icon.astro';
-import { t, route, routePaths, type Lang } from '../i18n/ui';
+import ContactActions from './ContactActions.astro';
+import { t, route, routePaths, PHONE, PHONE_TEL, MAIL, type Lang } from '../i18n/ui';
 import { u } from '../lib/url';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const paths = routePaths('contact');
 const title = t(lang, 'nav.contact');
+const mapSrc = `https://www.google.com/maps?q=36.86123,30.78224&z=16&hl=${lang}&output=embed`;
 ---
 <Base lang={lang} title={title} description={t(lang, 'contact.lead')} paths={paths} current="contact">
   <section class="page-hero">
     <div class="container">
-      <nav class="breadcrumb"><a href={u(route(lang, 'home'))}>{t(lang, 'crumb.home')}</a><span>/</span><span>{title}</span></nav>
+      <nav class="breadcrumb" aria-label={t(lang, 'a11y.crumb')}><a href={u(route(lang, 'home'))}>{t(lang, 'crumb.home')}</a><span>/</span><span>{title}</span></nav>
       <h1 class="reveal">{t(lang, 'contact.title')}</h1>
       <p class="lead reveal" style="--d:100ms; max-width:48rem">{t(lang, 'contact.lead')}</p>
+      <div class="reveal" style="--d:180ms; margin-top:var(--space-m)"><ContactActions lang={lang} subject={t(lang, 'contact.subject.product')} /></div>
     </div>
   </section>
   <section class="section">
     <div class="container split" style="align-items:start">
       <div class="grid" style="gap:var(--space-s)">
-        <div class="contact-card reveal"><small><Icon name="phone" style="width:1rem;height:1rem;vertical-align:-2px" /> {t(lang, 'contact.phone')}</small><a href="https://wa.me/905306337527">+90 530 633 75 27</a></div>
-        <div class="contact-card reveal" style="--d:60ms"><small>{t(lang, 'contact.mail')}</small><a href="mailto:sales@agripak.pro">sales@agripak.pro</a><a href="mailto:erengm@agripak.pro" style="color:var(--fg-muted)">erengm@agripak.pro</a></div>
-        <div class="contact-card reveal" style="--d:120ms"><small>{t(lang, 'contact.addr')}</small><span>AgriPak Kimya A.Ş.<br />Güzeloba Mah. Çağlayangil Cad. No: 3B<br />07230 Muratpaşa / Antalya, Türkiye</span></div>
-        <div class="contact-card reveal" style="--d:180ms"><small>{t(lang, 'contact.hours')}</small><span>{t(lang, 'contact.hours.v')}</span></div>
-        <div class="media wide reveal-scale" style="margin-top:var(--space-s)">
-          <iframe title={t(lang, 'map.title')} src="https://www.openstreetmap.org/export/embed.html?bbox=30.790%2C36.845%2C30.830%2C36.870&layer=mapnik&marker=36.8575%2C30.8100" style="width:100%; height:100%; border:0; min-height:16rem" loading="lazy"></iframe>
+        <div class="contact-card reveal"><small>{t(lang, 'contact.phone.l')}</small><a href={PHONE_TEL}>{PHONE}</a></div>
+        <div class="contact-card reveal" style="--d:60ms"><small>{t(lang, 'contact.mail.l')}</small><a href={`mailto:${MAIL}`}>{MAIL}</a></div>
+        <div class="contact-card reveal" style="--d:120ms"><small>{t(lang, 'contact.addr.l')}</small><span>AgriPak Kimya A.Ş.<br />Güzeloba Mah. Çağlayangil Cad. No: 3B<br />{t(lang, 'footer.country')}</span><span class="muted" style="font-size:var(--step--1)">{t(lang, 'contact.addr.note')}</span></div>
+        <div class="notice reveal" style="--d:180ms"><Icon name="info" /><p>{t(lang, 'contact.form.note')} <a href={u(route(lang, 'legal'))} style="font-weight:700; text-decoration:underline">{t(lang, 'contact.kvkk')}</a></p></div>
+      </div>
+      <div class="grid" style="gap:var(--space-s)">
+        <div class="media wide map-box reveal-scale" data-map data-src={mapSrc}>
+          <div class="map-placeholder">
+            <Icon name="pin" />
+            <strong>{t(lang, 'map.title')}</strong>
+            <span class="muted" style="font-size:var(--step--1)">{t(lang, 'map.note')}</span>
+            <button class="btn btn-dark" type="button" data-map-load>{t(lang, 'map.load')}</button>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-ghost" style="color:var(--ink)" href="https://www.google.com/maps/search/?api=1&query=36.86123,30.78224" target="_blank" rel="noopener"><Icon name="pin" />{t(lang, 'map.google')}</a>
+          <a class="btn btn-ghost" style="color:var(--ink)" href="https://yandex.com/maps/?pt=30.78224,36.86123&z=16&l=map" target="_blank" rel="noopener"><Icon name="pin" />{t(lang, 'map.yandex')}</a>
         </div>
       </div>
-      <form class="form card reveal" action="https://formspree.io/f/agripak-demo" method="post" style="--d:120ms">
-        <div class="form-row">
-          <label>{t(lang, 'form.name')}<input name="name" required /></label>
-          <label>{t(lang, 'form.company')}<input name="company" /></label>
-        </div>
-        <div class="form-row">
-          <label>{t(lang, 'form.phone')}<input name="phone" type="tel" required /></label>
-          <label>{t(lang, 'form.email')}<input name="email" type="email" /></label>
-        </div>
-        <div class="form-row">
-          <label>{t(lang, 'form.crop')}<input name="crop" /></label>
-          <label>{t(lang, 'form.area')}<input name="area" inputmode="numeric" /></label>
-        </div>
-        <label>{t(lang, 'form.msg')}<textarea name="message" rows="5"></textarea></label>
-        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-        <button class="btn btn-primary" type="submit">{t(lang, 'form.send')}<Icon name="arrow" /></button>
-        <small class="muted">{t(lang, 'form.kvkk')}</small>
-      </form>
     </div>
   </section>
 </Base>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-map]').forEach((box) => {
+    box.querySelector('[data-map-load]')?.addEventListener('click', () => {
+      const f = document.createElement('iframe');
+      f.src = box.dataset.src ?? ''; f.title = box.querySelector('strong')?.textContent ?? 'Map';
+      f.setAttribute('style', 'width:100%;height:100%;border:0;min-height:18rem'); f.setAttribute('loading', 'lazy'); f.setAttribute('referrerpolicy', 'no-referrer-when-downgrade'); f.setAttribute('allowfullscreen', '');
+      box.replaceChildren(f);
+    });
+  });
+</script>

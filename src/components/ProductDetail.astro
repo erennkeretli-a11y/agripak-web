@@ -1,37 +1,39 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from './Icon.astro';
+import ContactActions from './ContactActions.astro';
 import { t, route, type Lang } from '../i18n/ui';
 import { products, productUrl, productPaths, type Product } from '../data/products';
 import { u } from '../lib/url';
 interface Props { lang: Lang; product: Product }
 const { lang, product: p } = Astro.props;
 const paths = productPaths(p);
-const related = products.filter((x) => x !== p).slice(0, 3);
+const related = products.filter((x) => x !== p && x.status === 'portfolio').slice(0, 3);
 const formLabel = p.formShort[lang];
-const docs = ['prod.tds', 'prod.sds', 'prod.coa', 'prod.label'] as const;
+const statusKey = p.status === 'prep' ? 'prod.status.prep' : 'prod.status.portfolio';
+const tagKey = p.status === 'prep' ? 'status.prep' : 'status.portfolio';
+const subject = `${t(lang, 'contact.subject.product')}: ${p.name} ${formLabel}`;
+const waText = `${t(lang, 'contact.subject.product')}: ${p.name} ${formLabel}`;
 ---
-<Base lang={lang} title={`${p.name} · ${formLabel}`} description={p.intro[lang]} paths={paths} current="products">
+<Base lang={lang} title={`${p.name} · ${formLabel}`} description={p.seo[lang]} paths={paths} current="products">
   <section class="page-hero">
     <div class="container">
-      <nav class="breadcrumb" aria-label="Breadcrumb">
+      <nav class="breadcrumb" aria-label={t(lang, 'a11y.crumb')}>
         <a href={u(route(lang, 'home'))}>{t(lang, 'crumb.home')}</a><span>/</span>
         <a href={u(route(lang, 'products'))}>{t(lang, 'nav.products')}</a><span>/</span><span>{p.name}</span>
       </nav>
       <div class="split" style="align-items:center">
         <div class="grid" style="gap:var(--space-s)">
-          <span class="eyebrow reveal">{p.category[lang]}</span>
+          <span class={`tag ${p.status} reveal`} style="position:static; width:max-content">{t(lang, tagKey)}</span>
           <h1 class="reveal" style="--d:80ms">{p.name} <span class="muted" style="font-weight:500">{formLabel}</span></h1>
           <p class="lead reveal" style="--d:160ms">{p.tagline[lang]}</p>
           {p.active && <p class="reveal" style="--d:220ms; font-weight:700; color:var(--teal-deep)">{p.active[lang]}</p>}
-          <div class="hero-actions reveal" style="--d:280ms">
-            <a class="btn btn-primary" href={u(route(lang, 'contact'))}>{t(lang, 'prod.request')}<Icon name="arrow" /></a>
-            <a class="btn btn-ghost" style="color:var(--ink)" href="https://wa.me/905306337527" target="_blank" rel="noopener"><Icon name="wa" />WhatsApp</a>
-          </div>
+          <p class="muted reveal" style="--d:260ms; font-size:var(--step--1)">{t(lang, statusKey)}</p>
+          <div class="reveal" style="--d:300ms"><ContactActions lang={lang} subject={subject} waText={waText} /></div>
         </div>
         <div class="pshot reveal-scale">
           <span class="orb"></span>
-          <img src={u(p.image)} alt={p.name} width="400" height="600" decoding="async" />
+          <img src={u(p.image)} alt={`${p.name} ${formLabel}`} width="400" height="600" decoding="async" />
         </div>
       </div>
     </div>
@@ -48,31 +50,32 @@ const docs = ['prod.tds', 'prod.sds', 'prod.coa', 'prod.label'] as const;
         <h2>{t(lang, 'prod.apps')}</h2>
         <div class="table-wrap">
           <table class="spec apps">
-            <thead><tr><th>{t(lang, 'prod.method')}</th><th>{t(lang, 'prod.dose')}</th><th>{t(lang, 'prod.note')}</th></tr></thead>
+            <thead><tr><th>{t(lang, 'prod.method')}</th><th>{t(lang, 'prod.dose')}</th></tr></thead>
             <tbody>
-              {p.apps.map((a) => (<tr><td>{a.method[lang]}</td><td>{a.dose[lang]}</td><td class="muted" style="font-weight:500">{a.note?.[lang] ?? ''}</td></tr>))}
+              {p.apps.map((a) => (<tr><td>{a.method[lang]}</td><td style="font-weight:500">{a.info[lang]}</td></tr>))}
             </tbody>
           </table>
         </div>
-        <div class="notice"><Icon name="info" /><p><b>{t(lang, 'prod.status')}:</b> {t(lang, 'prod.notice')}</p></div>
+        <div class="notice"><Icon name="info" /><p>{t(lang, 'prod.apps.note')}</p></div>
+        {p.organicCert && <div class="notice"><Icon name="leaf" /><p>{t(lang, 'prod.organic')}</p></div>}
       </div>
       <aside class="grid" style="gap:var(--space-m); align-content:start">
         <div class="card">
           <h3>{t(lang, 'prod.specs')}</h3>
           <table class="spec">
             <tbody>
-              <tr><th>{t(lang, 'prod.manufacturer')}</th><td>Ligno OÜ, Tallinn</td></tr>
+              <tr><th>{t(lang, 'prod.manufacturer')}</th><td>Ligno OÜ, {lang === 'ru' ? 'Эстония' : lang === 'en' ? 'Estonia' : 'Estonya'}</td></tr>
               <tr><th>{t(lang, 'prod.form')}</th><td>{p.form[lang]}</td></tr>
               {p.specs.map((s) => (<tr><th>{s.k[lang]}</th><td>{s.v[lang]}</td></tr>))}
               <tr><th>{t(lang, 'prod.pack')}</th><td>{p.pack[lang]}</td></tr>
+              <tr><th>{t(lang, 'prod.source')}</th><td style="font-weight:500">{t(lang, 'prod.source.v')}</td></tr>
             </tbody>
           </table>
         </div>
         <div class="card">
-          <h3>{t(lang, 'prod.downloads')}</h3>
-          <ul class="docs" role="list">
-            {docs.map((d) => (<li><a href="#"><Icon name="doc" />{t(lang, d)}<span class="muted">PDF</span></a></li>))}
-          </ul>
+          <h3>{t(lang, 'prod.docs')}</h3>
+          <p>{t(lang, 'prod.docs.note')}</p>
+          <div><a class="btn btn-dark" href={`mailto:sales@agripak.pro?subject=${encodeURIComponent(subject)}`}><Icon name="doc" />{t(lang, 'prod.request')}</a></div>
         </div>
         <div class="card" style="background:var(--sand)">
           <img src={u('img/brand/igrow-logo.svg')} alt="iGrow" width="120" height="110" style="height:4.5rem; width:auto" />
@@ -82,18 +85,19 @@ const docs = ['prod.tds', 'prod.sds', 'prod.coa', 'prod.label'] as const;
     </div>
   </section>
 
-  <section class="section sand-bg">
-    <div class="container">
-      <div class="section-head reveal"><span class="eyebrow">{t(lang, 'prod.related')}</span></div>
-      <div class="grid grid-3">
-        {related.map((r) => (
-          <a class="pcard reveal" href={u(productUrl(lang, r))}>
-            <span class={`tag ${r.status === 'soon' ? 'soon' : ''}`}>{r.status === 'first' ? t(lang, 'port.first') : t(lang, 'port.soon')}</span>
-            <div class="pcard-media"><img src={u(r.image)} alt={r.name} loading="lazy" decoding="async" /></div>
-            <div class="pcard-body"><h3>{r.name}</h3><p>{r.short[lang]}</p><span class="link">{t(lang, 'port.detail')}<Icon name="arrow" /></span></div>
-          </a>
-        ))}
+  {related.length > 0 && (
+    <section class="section sand-bg">
+      <div class="container">
+        <div class="section-head reveal"><span class="eyebrow">{t(lang, 'prod.related')}</span></div>
+        <div class="grid grid-3">
+          {related.map((r) => (
+            <a class="pcard reveal" href={u(productUrl(lang, r))}>
+              <div class="pcard-media"><img src={u(r.image)} alt={r.name} loading="lazy" decoding="async" /></div>
+              <div class="pcard-body"><span class={`tag ${r.status}`}>{t(lang, r.status === 'prep' ? 'status.prep' : 'status.portfolio')}</span><h3>{r.name}</h3><p>{r.short[lang]}</p><span class="link">{t(lang, 'port.detail')}<Icon name="arrow" /></span></div>
+            </a>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 </Base>

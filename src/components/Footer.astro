@@ -1,5 +1,5 @@
 ---
-import { t, route, type Lang } from '../i18n/ui';
+import { t, route, PHONE, PHONE_TEL, MAIL, type Lang } from '../i18n/ui';
 import { products, productUrl } from '../data/products';
 import { u } from '../lib/url';
 interface Props { lang: Lang }
@@ -32,8 +32,8 @@ const year = new Date().getFullYear();
       <div>
         <h4>{t(lang, 'footer.contact')}</h4>
         <ul>
-          <li><a href="tel:+905306337527">+90 530 633 75 27</a></li>
-          <li><a href="mailto:sales@agripak.pro">sales@agripak.pro</a></li>
+          <li><a href={PHONE_TEL}>{PHONE}</a></li>
+          <li><a href={`mailto:${MAIL}`}>{MAIL}</a></li>
           <li>Güzeloba Mah. Çağlayangil Cad. No: 3B<br />{t(lang, 'footer.country')}</li>
         </ul>
         <h4 style="margin-top:1.25rem">{t(lang, 'footer.legal')}</h4>

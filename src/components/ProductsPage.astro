@@ -13,7 +13,7 @@ const lead = t(lang, 'products.lead');
 <Base lang={lang} title={title} description={lead} paths={paths} current="products">
   <section class="page-hero">
     <div class="container">
-      <nav class="breadcrumb" aria-label="Breadcrumb"><a href={u(route(lang, 'home'))}>{t(lang, 'crumb.home')}</a><span>/</span><span>{title}</span></nav>
+      <nav class="breadcrumb" aria-label={t(lang, 'a11y.crumb')}><a href={u(route(lang, 'home'))}>{t(lang, 'crumb.home')}</a><span>/</span><span>{title}</span></nav>
       <h1 class="reveal">{title}</h1>
       <p class="lead reveal" style="--d:100ms; max-width:48rem">{lead}</p>
     </div>
@@ -23,9 +23,9 @@ const lead = t(lang, 'products.lead');
       <div class="grid grid-3">
         {products.map((p, i) => (
           <a class="pcard reveal" style={`--d:${(i % 3) * 80}ms`} href={u(productUrl(lang, p))}>
-            <span class={`tag ${p.status === 'soon' ? 'soon' : ''}`}>{p.status === 'first' ? t(lang, 'port.first') : t(lang, 'port.soon')}</span>
             <div class="pcard-media"><img src={u(p.image)} alt={p.name} loading="lazy" decoding="async" /></div>
             <div class="pcard-body">
+              <span class={`tag ${p.status}`}>{t(lang, p.status === 'prep' ? 'status.prep' : 'status.portfolio')}</span>
               <h3>{p.name} <span class="muted" style="font-weight:500">· {p.formShort[lang]}</span></h3>
               <p>{p.short[lang]}</p>
               <span class="link">{t(lang, 'port.detail')}<Icon name="arrow" /></span>
@@ -35,7 +35,7 @@ const lead = t(lang, 'products.lead');
       </div>
       <div class="notice reveal" style="margin-top:var(--space-l)">
         <Icon name="info" />
-        <p>{t(lang, 'prod.notice')}</p>
+        <p>{t(lang, 'footer.notice')}</p>
       </div>
     </div>
   </section>

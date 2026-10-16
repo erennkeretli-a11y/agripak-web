@@ -23,6 +23,7 @@ const org = {
 ---
 <!doctype html>
 <html lang={lang}>
+  <script is:inline>document.documentElement.classList.add("js");</script>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -75,27 +76,6 @@ const org = {
       }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
       document.querySelectorAll('.reveal, .reveal-scale, .text-reveal').forEach((el) => io.observe(el));
 
-      // Counters
-      const cio = new IntersectionObserver((entries) => {
-        for (const e of entries) {
-          if (!e.isIntersecting) continue;
-          cio.unobserve(e.target);
-          const el = e.target as HTMLElement;
-          const raw = el.dataset.count ?? '';
-          const num = parseFloat(raw.replace(/[^\d.]/g, ''));
-          if (isNaN(num)) continue;
-          const prefix = raw.match(/^[^\d]*/)?.[0] ?? '';
-          const suffix = raw.match(/[^\d.]*$/)?.[0] ?? '';
-          const dur = 1400; const t0 = performance.now();
-          const tick = (now: number) => {
-            const p = Math.min(1, (now - t0) / dur); const ease = 1 - Math.pow(1 - p, 3);
-            el.textContent = prefix + Math.round(num * ease).toLocaleString('tr-TR') + suffix;
-            if (p < 1) requestAnimationFrame(tick);
-          };
-          requestAnimationFrame(tick);
-        }
-      }, { threshold: 0.6 });
-      document.querySelectorAll('[data-count]').forEach((el) => cio.observe(el));
 
       // Sticky showcase image swap
       const steps = document.querySelectorAll<HTMLElement>('.showcase-step');
@@ -115,11 +95,11 @@ const org = {
       // Mobile menu
       const btn = document.querySelector<HTMLButtonElement>('[data-menu]');
       const nav = document.getElementById('mobile-nav');
-      btn?.addEventListener('click', () => {
-        const open = nav!.hasAttribute('hidden');
-        if (open) nav!.removeAttribute('hidden'); else nav!.setAttribute('hidden', '');
-        btn.setAttribute('aria-expanded', String(open));
-      });
+      const setMenu = (open: boolean) => { if (open) nav!.removeAttribute('hidden'); else nav!.setAttribute('hidden', ''); btn?.setAttribute('aria-expanded', String(open)); };
+      btn?.addEventListener('click', () => setMenu(nav!.hasAttribute('hidden')));
+      addEventListener('keydown', (e) => { if (e.key === 'Escape' && nav && !nav.hasAttribute('hidden')) { setMenu(false); btn?.focus(); } });
+      // Respect reduced motion for reveal classes
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.remove('js');
 
       // Header tint after scroll
       const header = document.querySelector('.site-header') as HTMLElement | null;
