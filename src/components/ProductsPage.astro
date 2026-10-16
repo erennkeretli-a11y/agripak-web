@@ -20,7 +20,7 @@ const lead = t(lang, 'products.lead');
   </section>
   <section class="section">
     <div class="container">
-      <div class="grid grid-3">
+      <div class="grid grid-3 product-grid">
         {products.map((p, i) => (
           <a class="pcard reveal" style={`--d:${(i % 3) * 80}ms`} href={u(productUrl(lang, p))}>
             <div class="pcard-media"><img src={u(p.image)} alt={p.name} loading="lazy" decoding="async" /></div>

@@ -10,29 +10,29 @@ const title = 'Growtech Antalya 2026';
 const content = {
   tr: {
     lead: 'Growtech Antalya 24–27 Kasım 2026’da ANFAŞ Expo Center’da düzenleniyor. Ligno OÜ ve AgriPak Kimya ile 3-H130 numaralı stantta görüşmek için bize ulaşın.',
-    h1: 'Stantta neler konuşabiliriz',
+    h1: 'Stantta Neler Konuşabiliriz',
     items: [
-      ['Ürünleri tanıma', 'Ligno OÜ portföyünü ve Türkiye pazarına hazırlanan ilk ürünleri birlikte ele alalım.'],
-      ['Ekiple görüşme', 'Stantta Ligno OÜ ve AgriPak Kimya temsilcileriyle iş birliği konularını görüşebilirsiniz.'],
-      ['Teknik sorular', 'İlgilendiğiniz ürünleri önceden bildirirseniz mevcut belgeleri hazır bulunduralım.'],
-      ['Bayilik iş birliği', 'Türkiye pazarı için olası iş birliği modellerini konuşalım. Görüşme saatini önceden kararlaştırmak en iyisi.'],
+      ['Ürünleri Tanıma', 'Ligno OÜ portföyünü ve Türkiye pazarına hazırlanan ilk ürünleri birlikte ele alalım.'],
+      ['Ekiple Görüşme', 'Stantta Ligno OÜ ve AgriPak Kimya temsilcileriyle iş birliği konularını görüşebilirsiniz.'],
+      ['Teknik Sorular', 'İlgilendiğiniz ürünleri önceden bildirirseniz mevcut belgeleri hazır bulunduralım.'],
+      ['Bayilik İş Birliği', 'Türkiye pazarı için olası iş birliği modellerini konuşalım. Görüşme saatini önceden kararlaştırmak en iyisi.'],
     ],
-    h2: 'Pratik bilgiler',
+    h2: 'Pratik Bilgiler',
     info: [['Tarih', '24–27 Kasım 2026'], ['Yer', 'ANFAŞ Expo Center, Antalya'], ['Stant', '3-H130'], ['Randevu', 'sales@agripak.pro · +90 530 633 75 27']],
-    cta: 'Görüşme talep edin',
+    cta: 'Görüşme Talep Edin',
   },
   en: {
     lead: 'Growtech Antalya takes place at ANFAŞ Expo Center on 24–27 November 2026. Contact us to arrange a meeting with Ligno OÜ and AgriPak Kimya at stand 3-H130.',
-    h1: 'What we can discuss at the stand',
+    h1: 'What We Can Discuss at the Stand',
     items: [
-      ['Getting to know the products', 'Let us go through the Ligno OÜ portfolio and the first products being prepared for the Turkish market.'],
-      ['Meeting the team', 'Cooperation topics can be discussed with representatives of Ligno OÜ and AgriPak Kimya at the stand.'],
-      ['Technical questions', 'Let us know in advance which products interest you so that we can have the available documentation ready.'],
-      ['Distribution partnership', 'Let us discuss possible cooperation models for the Turkish market. It is best to agree on a meeting time in advance.'],
+      ['Getting to Know the Products', 'Let us go through the Ligno OÜ portfolio and the first products being prepared for the Turkish market.'],
+      ['Meeting the Team', 'Cooperation topics can be discussed with representatives of Ligno OÜ and AgriPak Kimya at the stand.'],
+      ['Technical Questions', 'Let us know in advance which products interest you so that we can have the available documentation ready.'],
+      ['Distribution Partnership', 'Let us discuss possible cooperation models for the Turkish market. It is best to agree on a meeting time in advance.'],
     ],
-    h2: 'Practical information',
+    h2: 'Practical Information',
     info: [['Dates', '24–27 November 2026'], ['Venue', 'ANFAŞ Expo Center, Antalya'], ['Stand', '3-H130'], ['Appointments', 'sales@agripak.pro · +90 530 633 75 27']],
-    cta: 'Request a meeting',
+    cta: 'Request a Meeting',
   },
   ru: {
     lead: 'Выставка Growtech Antalya пройдёт 24–27 ноября 2026 года в ANFAŞ Expo Center. Свяжитесь с нами, чтобы договориться о встрече с Ligno OÜ и AgriPak Kimya на стенде 3-H130.',
@@ -52,22 +52,22 @@ const c = content[lang];
 const mailto = `mailto:${MAIL}?subject=${encodeURIComponent(t(lang, 'contact.subject.growtech'))}`;
 ---
 <Base lang={lang} title={title} description={c.lead} paths={paths} current="growtech">
-  <section class="hero" style="min-height:min(70dvh,44rem)">
+  <section class="hero hero-event">
     <div class="hero-media">
       <picture><source srcset={u('img/photo/greenhouse_pepper.webp')} type="image/webp" /><img src={u('img/photo/greenhouse_pepper.jpg')} alt="" width="1536" height="864" fetchpriority="high" /></picture>
     </div>
     <div class="container hero-inner">
-      <span class="hero-badge reveal"><i>3-H130</i>{t(lang, 'gt.date')}</span>
+      <span class="hero-badge reveal"><i>3-H130</i><span>{t(lang, 'gt.date')}</span></span>
       <h1 class="reveal" style="--d:120ms; font-size:var(--step-4)">{title}</h1>
       <p class="lead reveal" style="--d:220ms">{c.lead}</p>
-      <div class="hero-actions reveal" style="--d:320ms"><a class="btn btn-primary" href={mailto}>{c.cta}<Icon name="arrow" /></a></div>
+      <div class="hero-actions reveal" style="--d:320ms"><a class="btn btn-primary has-arrow" href={mailto}>{c.cta}<Icon name="arrow" /></a></div>
     </div>
     <span class="img-tag">{t(lang, 'img.illustrative')}</span>
   </section>
   <section class="section">
     <div class="container">
       <div class="section-head reveal"><h2>{c.h1}</h2></div>
-      <div class="grid grid-2">
+      <div class="grid grid-2 topic-grid">
         {c.items.map(([h, d], i) => (<article class="card reveal" style={`--d:${i * 80}ms`}><span class="icon"><Icon name={['leaf', 'phone', 'doc', 'globe'][i]} /></span><h3>{h}</h3><p>{d}</p></article>))}
       </div>
     </div>
@@ -76,7 +76,7 @@ const mailto = `mailto:${MAIL}?subject=${encodeURIComponent(t(lang, 'contact.sub
     <div class="container split" style="align-items:start">
       <div class="prose reveal">
         <h2>{c.h2}</h2>
-        <table class="spec" style="background:#fff"><tbody>{c.info.map(([k, v]) => (<tr><th>{k}</th><td>{v}</td></tr>))}</tbody></table>
+        <table class="spec" style="background:#fff"><tbody>{c.info.map(([k, v]) => (<tr><th scope="row">{k}</th><td>{v}</td></tr>))}</tbody></table>
       </div>
       <div class="media wide reveal-scale">
         <picture><source srcset={u('img/photo/aerial_antalya.webp')} type="image/webp" /><img src={u('img/photo/aerial_antalya.jpg')} alt={t(lang, 'img.illustrative')} width="1536" height="864" loading="lazy" /></picture>

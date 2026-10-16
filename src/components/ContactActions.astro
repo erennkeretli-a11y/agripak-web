@@ -1,13 +1,13 @@
 ---
 import Icon from './Icon.astro';
-import { t, PHONE, PHONE_TEL, WA, MAIL, type Lang } from '../i18n/ui';
+import { t, PHONE_TEL, WA, MAIL, type Lang } from '../i18n/ui';
 interface Props { lang: Lang; subject?: string; waText?: string; compact?: boolean }
 const { lang, subject, waText, compact } = Astro.props;
 const mailto = `mailto:${MAIL}` + (subject ? `?subject=${encodeURIComponent(subject)}` : '');
 const wa = WA + (waText ? `?text=${encodeURIComponent(waText)}` : '');
 ---
-<div class={`hero-actions ${compact ? 'compact' : ''}`}>
-  <a class="btn btn-dark" href={PHONE_TEL}><Icon name="phone" />{t(lang, 'contact.call')}</a>
+<div class={`hero-actions contact-actions ${compact ? 'compact' : ''}`}>
   <a class="btn btn-wa" href={wa} target="_blank" rel="noopener"><Icon name="wa" />{t(lang, 'contact.wa')}</a>
-  <a class="btn btn-ghost" style="color:var(--ink)" href={mailto}><Icon name="mail" />{t(lang, 'contact.mail')}</a>
+  <a class="btn btn-ghost" href={PHONE_TEL}><Icon name="phone" />{t(lang, 'contact.call')}</a>
+  <a class="btn btn-ghost" href={mailto}><Icon name="mail" />{t(lang, 'contact.mail')}</a>
 </div>

@@ -35,10 +35,10 @@ const nav = [
     </div>
   </div>
   <nav class="container mobile-nav" id="mobile-nav" hidden aria-label={t(lang, 'a11y.nav')}>
-    {nav.map(([key, label]) => (<a href={u(route(lang, key))}>{label}</a>))}
+    {nav.map(([key, label]) => (<a href={u(route(lang, key))} aria-current={current === key ? 'page' : undefined}>{label}</a>))}
     <a class="btn btn-wa" href={WA} target="_blank" rel="noopener"><Icon name="wa" />{t(lang, 'nav.wa')} · +90 530 633 75 27</a>
   </nav>
 </header>
 <style>
-  @media (min-width: 64rem) { [data-desktop-only] { display: inline-flex !important; } }
+  @media (min-width: 80rem) { [data-desktop-only] { display: inline-flex !important; } }
 </style>
