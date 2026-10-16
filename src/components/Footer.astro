@@ -1,0 +1,52 @@
+---
+import { t, route, type Lang } from '../i18n/ui';
+import { products, productUrl } from '../data/products';
+import { u } from '../lib/url';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src={u('img/brand/agripak-logo.svg')} alt="AgriPak Kimya" width="120" height="140" />
+        <p style="margin-top:1rem; max-width:28rem">{t(lang, 'footer.about')}</p>
+      </div>
+      <div>
+        <h4>{t(lang, 'footer.products')}</h4>
+        <ul>
+          {products.map((p) => (<li><a href={u(productUrl(lang, p))}>{p.name} · {p.form[lang].split(',')[0]}</a></li>))}
+        </ul>
+      </div>
+      <div>
+        <h4>{t(lang, 'footer.company')}</h4>
+        <ul>
+          <li><a href={u(route(lang, 'about'))}>{t(lang, 'nav.about')}</a></li>
+          <li><a href={u(route(lang, 'quality'))}>{t(lang, 'nav.quality')}</a></li>
+          <li><a href={u(route(lang, 'growtech'))}>{t(lang, 'nav.growtech')}</a></li>
+          <li><a href={u(route(lang, 'contact'))}>{t(lang, 'nav.contact')}</a></li>
+          <li><a href={u(route(lang, 'legal'))}>{t(lang, 'footer.kvkk')}</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>{t(lang, 'footer.contact')}</h4>
+        <ul>
+          <li><a href="tel:+905306337527">+90 530 633 75 27</a></li>
+          <li><a href="mailto:sales@agripak.pro">sales@agripak.pro</a></li>
+          <li>Güzeloba Mah. Çağlayangil Cad. No: 3B<br />Muratpaşa / Antalya, Türkiye</li>
+        </ul>
+        <h4 style="margin-top:1.25rem">{t(lang, 'footer.legal')}</h4>
+        <ul style="font-size:.8rem; color:#8fa5a2">
+          <li>AGRİPAK KİMYA ANONİM ŞİRKETİ</li>
+          <li>Antalya Ticaret Sicili 146543 · MERSİS 0009178097300001</li>
+          <li>Antalya Kurumlar V.D. 0091780973</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {year} AgriPak Kimya A.Ş. {t(lang, 'footer.rights')}</span>
+      <span>{t(lang, 'footer.notice')}</span>
+    </div>
+  </div>
+</footer>

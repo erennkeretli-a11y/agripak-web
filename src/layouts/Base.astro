@@ -1,0 +1,119 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { t, type Lang } from '../i18n/ui';
+import { u } from '../lib/url';
+interface Props { lang: Lang; title?: string; description?: string; altPath?: string; current?: string; ogImage?: string }
+const { lang, title, description, altPath, current, ogImage } = Astro.props;
+const fullTitle = title ? `${title} | AgriPak Kimya` : t(lang, 'meta.title');
+const desc = description ?? t(lang, 'meta.desc');
+const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const canonical = site + Astro.url.pathname;
+const alt = altPath ? site + u(altPath) : undefined;
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'AgriPak Kimya A.Ş.',
+  url: site || 'https://agripak.pro',
+  logo: site + u('img/brand/agripak-logo.png'),
+  email: 'sales@agripak.pro',
+  telephone: '+905306337527',
+  address: { '@type': 'PostalAddress', streetAddress: 'Güzeloba Mah. Çağlayangil Cad. No: 3B', addressLocality: 'Muratpaşa', addressRegion: 'Antalya', addressCountry: 'TR' },
+};
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={desc} />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#15323a" />
+    <link rel="icon" href={u('favicon.svg')} type="image/svg+xml" />
+    <link rel="canonical" href={canonical} />
+    {alt && <link rel="alternate" hreflang={lang === 'tr' ? 'en' : 'tr'} href={alt} />}
+    <link rel="alternate" hreflang={lang} href={canonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={lang === 'tr' ? 'tr_TR' : 'en_US'} />
+    <meta property="og:image" content={site + u(ogImage ?? 'img/photo/hero_greenhouse.jpg')} />
+    <link rel="preload" href={u('fonts/manrope-latin.woff2')} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={u('fonts/manrope-latin-ext.woff2')} as="font" type="font/woff2" crossorigin />
+    <style set:html={`
+      @font-face{font-family:'Manrope';font-style:normal;font-weight:300 800;font-display:swap;src:url('${u('fonts/manrope-latin-ext.woff2')}') format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+      @font-face{font-family:'Manrope';font-style:normal;font-weight:300 800;font-display:swap;src:url('${u('fonts/manrope-latin.woff2')}') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+      @font-face{font-family:'Manrope Fallback';src:local('Arial');size-adjust:104%;ascent-override:95%;descent-override:25%;line-gap-override:0%}
+    `} />
+    <script type="application/ld+json" set:html={JSON.stringify(org)} />
+  </head>
+  <body>
+    <Header lang={lang} altPath={altPath} current={current} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <script>
+      // Reveal on scroll
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        }
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+      document.querySelectorAll('.reveal, .reveal-scale, .text-reveal').forEach((el) => io.observe(el));
+
+      // Counters
+      const cio = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          cio.unobserve(e.target);
+          const el = e.target as HTMLElement;
+          const raw = el.dataset.count ?? '';
+          const num = parseFloat(raw.replace(/[^\d.]/g, ''));
+          if (isNaN(num)) continue;
+          const prefix = raw.match(/^[^\d]*/)?.[0] ?? '';
+          const suffix = raw.match(/[^\d.]*$/)?.[0] ?? '';
+          const dur = 1400; const t0 = performance.now();
+          const tick = (now: number) => {
+            const p = Math.min(1, (now - t0) / dur); const ease = 1 - Math.pow(1 - p, 3);
+            el.textContent = prefix + Math.round(num * ease).toLocaleString('tr-TR') + suffix;
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }
+      }, { threshold: 0.6 });
+      document.querySelectorAll('[data-count]').forEach((el) => cio.observe(el));
+
+      // Sticky showcase image swap
+      const steps = document.querySelectorAll<HTMLElement>('.showcase-step');
+      const imgs = document.querySelectorAll<HTMLElement>('.showcase-sticky img');
+      if (steps.length && imgs.length) {
+        const sio = new IntersectionObserver((entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            const i = Number((e.target as HTMLElement).dataset.step ?? 0);
+            steps.forEach((s, j) => s.classList.toggle('is-active', i === j));
+            imgs.forEach((im, j) => im.classList.toggle('is-active', i === j));
+          }
+        }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
+        steps.forEach((s) => sio.observe(s));
+      }
+
+      // Mobile menu
+      const btn = document.querySelector<HTMLButtonElement>('[data-menu]');
+      const nav = document.getElementById('mobile-nav');
+      btn?.addEventListener('click', () => {
+        const open = nav!.hasAttribute('hidden');
+        if (open) nav!.removeAttribute('hidden'); else nav!.setAttribute('hidden', '');
+        btn.setAttribute('aria-expanded', String(open));
+      });
+
+      // Header tint after scroll
+      const header = document.querySelector('.site-header') as HTMLElement | null;
+      const onScroll = () => header?.classList.toggle('scrolled', window.scrollY > 24);
+      onScroll(); addEventListener('scroll', onScroll, { passive: true });
+    </script>
+  </body>
+</html>

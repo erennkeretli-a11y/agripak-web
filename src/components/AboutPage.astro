@@ -1,0 +1,101 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from './Icon.astro';
+import { t, route, type Lang } from '../i18n/ui';
+import { u } from '../lib/url';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const tr = lang === 'tr';
+const altPath = tr ? '/en/about/' : '/hakkimizda/';
+const title = tr ? 'Hakkımızda' : 'About us';
+const c = tr ? {
+  lead: 'AgriPak Kimya, Avrupa Birliği’nde üretilen humik ve fulvik asit bazlı bitki besleme ürünlerini Türkiye’nin en yoğun sera ve bahçe bitkileri bölgesinden, Antalya’dan dağıtan bir distribütörlük şirketidir.',
+  h1: 'Yerel stok, yerel analiz, yerel destek',
+  p1: 'Şirketimiz 2023’te Ankara’da kuruldu, 2026’da merkezini Antalya Muratpaşa’ya taşıdı ve aynı yıl Ligno OÜ ile Türkiye distribütörlük ortaklığını başlattı. Amacımız basit: üreticinin ithal ürüne ulaşmak için haftalarca beklemesine, belgesiz ve tescilsiz ürünle risk almasına gerek kalmasın.',
+  p2: 'Her sevkiyat Antalya gümrüğünde akredite laboratuvar analizinden geçer, tescilli değerlerle karşılaştırılır ve Antalya’daki depomuzdan Akdeniz ve Ege bölgelerine sevk edilir. Ziraat mühendisi ekibimiz bitki, toprak ve sulama sistemine göre uygulama programı hazırlar.',
+  h2: 'Ligno OÜ ortaklığı',
+  p3: 'Ligno OÜ 2014’ten beri Tallinn, Estonya’da faaliyet gösteren bir gübre üreticisidir. iGrow, LignoGro ve Lignohumate markaları altında, modifiye lignin kaynağından elde edilen humik ve fulvik asit ürünleri geliştirir. Ürünlerin bir bölümü AB organik tarım girdi listelerinde yer alır.',
+  p4: 'AgriPak Kimya, Ligno OÜ’nün Türkiye’deki resmi distribütörü olarak ithalat, Tarım ve Orman Bakanlığı tescili, depolama, dağıtım ve teknik destek süreçlerinin tamamını üstlenir.',
+  h3: 'Değerlerimiz',
+  v: [
+    ['Belgeli ürün', 'Her parti için analiz sertifikası, her ürün için Bakanlık tescili. Belgesiz ürün satmayız.'],
+    ['Dürüst veri', 'Verim iddialarını deneme verisiyle, metodolojisiyle birlikte paylaşırız. Garanti vermeyiz, ölçeriz.'],
+    ['Yakın destek', 'Antalya’dan bir telefon uzaklıktayız. Tarlada, serada, bayide yanınızdayız.'],
+  ],
+  team: 'Yönetim',
+  ceo: 'Eren Keretli',
+  ceoT: 'CEO, AgriPak Kimya A.Ş.',
+  ceoD: 'Antalya merkezli, Türkiye operasyonunun tamamından sorumlu. Tescil, gümrük, bayi ağı ve Growtech hazırlıklarını yürütür.',
+  partner: 'Ligno OÜ',
+  partnerT: 'Üretici ortak, Tallinn',
+  partnerD: 'Ürün geliştirme, üretim, analiz sertifikaları ve ihracat lojistiği.',
+} : {
+  lead: 'AgriPak Kimya is a distribution company bringing EU manufactured humic and fulvic acid based plant nutrition products to growers from Antalya, Turkey’s densest greenhouse and horticulture region.',
+  h1: 'Local stock, local analysis, local support',
+  p1: 'The company was founded in Ankara in 2023, moved its headquarters to Antalya Muratpaşa in 2026 and started the Turkish distribution partnership with Ligno OÜ the same year. Our goal is simple: growers should not wait weeks for imported product or take risks with undocumented, unregistered goods.',
+  p2: 'Every shipment passes accredited laboratory analysis at Antalya customs, is checked against registered values and is dispatched from our Antalya warehouse to the Mediterranean and Aegean regions. Our agronomists prepare application programmes based on crop, soil and irrigation system.',
+  h2: 'The Ligno OÜ partnership',
+  p3: 'Ligno OÜ is a fertilizer manufacturer operating in Tallinn, Estonia since 2014. Under the iGrow, LignoGro and Lignohumate brands it develops humic and fulvic acid products obtained from modified lignin. Several products are listed as EU organic farming inputs.',
+  p4: 'As the official distributor of Ligno OÜ in Turkey, AgriPak Kimya takes on the entire chain of import, registration with the Ministry of Agriculture and Forestry, storage, distribution and technical support.',
+  h3: 'Our values',
+  v: [
+    ['Documented product', 'A certificate of analysis for every batch, Ministry registration for every product. We do not sell undocumented goods.'],
+    ['Honest data', 'We share yield claims together with trial data and methodology. We measure, we do not guarantee.'],
+    ['Close support', 'We are one phone call away from Antalya. In the field, in the greenhouse, at the dealer.'],
+  ],
+  team: 'Management',
+  ceo: 'Eren Keretli',
+  ceoT: 'CEO, AgriPak Kimya A.Ş.',
+  ceoD: 'Based in Antalya, responsible for the entire Turkish operation: registration, customs, dealer network and Growtech preparations.',
+  partner: 'Ligno OÜ',
+  partnerT: 'Manufacturing partner, Tallinn',
+  partnerD: 'Product development, production, certificates of analysis and export logistics.',
+};
+---
+<Base lang={lang} title={title} description={c.lead} altPath={altPath} current="about">
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb"><a href={u(route(lang, 'home'))}>{t(lang, 'crumb.home')}</a><span>/</span><span>{title}</span></nav>
+      <h1 class="reveal">{title}</h1>
+      <p class="lead reveal" style="--d:100ms; max-width:48rem">{c.lead}</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container split" style="align-items:start">
+      <div class="prose reveal">
+        <h2>{c.h1}</h2>
+        <p>{c.p1}</p>
+        <p>{c.p2}</p>
+      </div>
+      <div class="media tall reveal-scale">
+        <picture><source srcset={u('img/photo/greenhouse_pepper.webp')} type="image/webp" /><img src={u('img/photo/greenhouse_pepper.jpg')} alt="" width="1536" height="864" loading="lazy" /></picture>
+        <span class="caption">Antalya</span>
+      </div>
+    </div>
+  </section>
+  <section class="section sand-bg">
+    <div class="container split" style="align-items:start">
+      <div class="card reveal" style="padding:var(--space-l); display:grid; place-items:center; background:#fff">
+        <img src={u('img/brand/igrow-logo.svg')} alt="iGrow, Ligno OÜ" style="height:7rem; width:auto" />
+      </div>
+      <div class="prose reveal" style="--d:100ms">
+        <h2>{c.h2}</h2>
+        <p>{c.p3}</p>
+        <p>{c.p4}</p>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal"><span class="eyebrow">{c.h3}</span></div>
+      <div class="grid grid-3">
+        {c.v.map(([h, d], i) => (<article class="card reveal" style={`--d:${i * 90}ms`}><span class="icon"><Icon name={['stamp', 'lab', 'phone'][i]} /></span><h3>{h}</h3><p>{d}</p></article>))}
+      </div>
+      <div class="section-head reveal" style="margin-top:var(--space-2xl)"><span class="eyebrow">{c.team}</span></div>
+      <div class="grid grid-2">
+        <article class="card reveal"><h3>{c.ceo}</h3><p style="font-weight:700; color:var(--teal-deep)">{c.ceoT}</p><p>{c.ceoD}</p><p><a href="mailto:erengm@agripak.pro" style="font-weight:700">erengm@agripak.pro</a></p></article>
+        <article class="card reveal" style="--d:90ms"><h3>{c.partner}</h3><p style="font-weight:700; color:var(--teal-deep)">{c.partnerT}</p><p>{c.partnerD}</p><p><a href="https://ligno.ee" target="_blank" rel="noopener" style="font-weight:700">ligno.ee</a></p></article>
+      </div>
+    </div>
+  </section>
+</Base>

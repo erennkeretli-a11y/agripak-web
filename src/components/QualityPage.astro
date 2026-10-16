@@ -1,0 +1,69 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from './Icon.astro';
+import { t, route, type Lang } from '../i18n/ui';
+import { u } from '../lib/url';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const tr = lang === 'tr';
+const altPath = tr ? '/en/quality-and-registration/' : '/kalite-ve-tescil/';
+const title = tr ? 'Kalite ve Tescil' : 'Quality and Registration';
+const c = tr ? {
+  lead: 'Türkiye’de gübre ve biyostimülant satışı Tarım ve Orman Bakanlığı lisans ve tescil sistemine bağlıdır. Her adımı açıkça paylaşıyoruz; sitemizdeki ürün bilgileri onaylı etiketle birebirdir.',
+  steps: [
+    ['Lisans belgesi', 'AgriPak Kimya, Tarım ve Orman Bakanlığı BÜGEM nezdinde organik ve kimyevi gübre lisans başvurusunu Antalya merkez adresiyle yürütür. Lisans şirkete bir kez verilir.'],
+    ['Numune ithalatı ve analiz', 'Her ürün için tescil numunesi Antalya gümrüğüne gelir; akredite laboratuvarda içerik analizi yapılır. Organik kaynaklı ürünlerde ağır metal analizi dahildir.'],
+    ['Tescil belgesi ve etiket', 'Analiz sonuçları tescil dosyasına girer, Bakanlık ürün tescil belgesini ve Türkçe etiketi onaylar. Tescil numarası ürün sayfalarına eklenir.'],
+    ['Sürekli denetim', 'Her ithalat partisinden gümrükte rastgele numune alınır ve tescilli değerlerle karşılaştırılır. Uygun olmayan parti piyasaya sürülmez.'],
+  ],
+  h2: 'Belgeler',
+  docs: ['Ligno OÜ analiz sertifikası (COA), her parti', 'Teknik veri föyü (TDS) ve güvenlik bilgi formu (SDS), her ürün', 'AB organik girdi sertifikası (üretici), ilgili ürünler', 'Bakanlık tescil belgesi ve onaylı etiket, tescil tamamlandıkça', 'Antalya Ticaret Odası faaliyet belgesi ve vergi levhası'],
+  h3: 'Beyanlarımız hakkında',
+  p3: 'Verim, kalite veya dayanıklılık etkilerine ilişkin ifadeler üretici deneme verilerine ve bilimsel literatüre dayanır; yerel deneme sonuçlarını metodolojisiyle birlikte yayınlarız. Hiçbir ürünümüz bitki koruma ürünü değildir ve bu şekilde tanıtılmaz.',
+  status: 'Güncel durum',
+  statusD: 'Lisans başvurusu ve iGrow Revive (kuru, sıvı) tescil süreci 2026 yılı içinde yürütülmektedir. Lisans ve tescil numaraları alındığında bu sayfada ve ürün sayfalarında yayınlanacaktır.',
+} : {
+  lead: 'Selling fertilizers and biostimulants in Turkey is tied to the licence and registration system of the Ministry of Agriculture and Forestry. We share every step openly; product information on this site matches the approved label.',
+  steps: [
+    ['Licence certificate', 'AgriPak Kimya files its organic and chemical fertilizer licence application with the Ministry’s BÜGEM directorate under its Antalya headquarters address. The licence is granted once per company.'],
+    ['Sample import and analysis', 'A registration sample of each product arrives at Antalya customs and is analysed at an accredited laboratory. Heavy metal analysis is included for organic origin products.'],
+    ['Registration certificate and label', 'Analysis results enter the registration file; the Ministry approves the product registration certificate and the Turkish label. The registration number is added to product pages.'],
+    ['Continuous inspection', 'Random samples are taken at customs from every import batch and compared with registered values. A non conforming batch is not released to the market.'],
+  ],
+  h2: 'Documents',
+  docs: ['Ligno OÜ certificate of analysis (COA), every batch', 'Technical data sheet (TDS) and safety data sheet (SDS), every product', 'EU organic input certificate (manufacturer), relevant products', 'Ministry registration certificate and approved label, as registration completes', 'Antalya Chamber of Commerce activity certificate and tax plate'],
+  h3: 'About our claims',
+  p3: 'Statements on yield, quality or resilience effects are based on manufacturer trial data and scientific literature; local trial results are published together with methodology. None of our products is a plant protection product and none is presented as one.',
+  status: 'Current status',
+  statusD: 'The licence application and the registration of iGrow Revive (dry, liquid) are in progress during 2026. Licence and registration numbers will be published on this page and on product pages as soon as they are issued.',
+};
+---
+<Base lang={lang} title={title} description={c.lead} altPath={altPath} current="quality">
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb"><a href={u(route(lang, 'home'))}>{t(lang, 'crumb.home')}</a><span>/</span><span>{title}</span></nav>
+      <h1 class="reveal">{title}</h1>
+      <p class="lead reveal" style="--d:100ms; max-width:48rem">{c.lead}</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="steps">
+        {c.steps.map(([h, d], i) => (<article class="step reveal" style={`--d:${i * 90}ms`}><h3>{h}</h3><p>{d}</p></article>))}
+      </div>
+      <div class="notice reveal" style="margin-top:var(--space-l)"><Icon name="info" /><p><b>{c.status}:</b> {c.statusD}</p></div>
+    </div>
+  </section>
+  <section class="section sand-bg">
+    <div class="container split" style="align-items:start">
+      <div class="prose reveal">
+        <h2>{c.h2}</h2>
+        <ul>{c.docs.map((d) => (<li>{d}</li>))}</ul>
+      </div>
+      <div class="prose reveal" style="--d:100ms">
+        <h2>{c.h3}</h2>
+        <p>{c.p3}</p>
+      </div>
+    </div>
+  </section>
+</Base>

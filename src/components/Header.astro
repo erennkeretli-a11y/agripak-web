@@ -1,0 +1,44 @@
+---
+import { t, route, altLang, type Lang } from '../i18n/ui';
+import { u } from '../lib/url';
+import Icon from './Icon.astro';
+interface Props { lang: Lang; altPath?: string; current?: string }
+const { lang, altPath, current } = Astro.props;
+const other = altLang(lang);
+const nav = [
+  ['products', t(lang, 'nav.products')],
+  ['about', t(lang, 'nav.about')],
+  ['quality', t(lang, 'nav.quality')],
+  ['growtech', t(lang, 'nav.growtech')],
+  ['contact', t(lang, 'nav.contact')],
+] as const;
+const WA = 'https://wa.me/905306337527';
+---
+<header class="site-header" id="top">
+  <div class="container bar">
+    <a class="brand" href={u(route(lang, 'home'))} aria-label="AgriPak Kimya">
+      <img src={u('img/brand/agripak-mark.svg')} alt="" width="48" height="36" />
+      <span class="brand-text"><b>Agri<em>Pak</em></b><span>Kimya</span></span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      {nav.map(([key, label]) => (
+        <a href={u(route(lang, key))} aria-current={current === key ? 'page' : undefined}>{label}</a>
+      ))}
+    </nav>
+    <div class="header-actions">
+      <div class="lang" aria-label="Language">
+        <a href={u(route(lang, 'home'))} aria-current={true} lang={lang}>{lang.toUpperCase()}</a>
+        <a href={u(altPath ?? route(other, 'home'))} lang={other} hreflang={other}>{other.toUpperCase()}</a>
+      </div>
+      <a class="btn btn-dark" href={WA} target="_blank" rel="noopener" style="display:none" data-desktop-only><Icon name="wa" />{t(lang, 'nav.wa')}</a>
+      <button class="menu-btn" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menu" data-menu><Icon name="menu" /></button>
+    </div>
+  </div>
+  <nav class="container mobile-nav" id="mobile-nav" hidden>
+    {nav.map(([key, label]) => (<a href={u(route(lang, key))}>{label}</a>))}
+    <a class="btn btn-wa" href={WA} target="_blank" rel="noopener"><Icon name="wa" />{t(lang, 'nav.wa')} · +90 530 633 75 27</a>
+  </nav>
+</header>
+<style>
+  @media (min-width: 64rem) { [data-desktop-only] { display: inline-flex !important; } }
+</style>

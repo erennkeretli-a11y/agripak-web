@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from './Icon.astro';
+import { t, route, type Lang } from '../i18n/ui';
+import { u } from '../lib/url';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const tr = lang === 'tr';
+const altPath = tr ? '/en/growtech-2026/' : '/growtech-2026/';
+const title = 'Growtech Antalya 2026';
+const c = tr ? {
+  lead: '25. Uluslararası Sera, Tarım Teknolojileri ve Hayvancılık Ekipmanları Fuarı. 24-27 Kasım 2026, Anfaş Expo Center, Antalya. Ligno OÜ ve AgriPak Kimya ortak standı: 3-H130.',
+  h1: 'Stantta sizi neler bekliyor',
+  items: [
+    ['Ürün vitrini', 'iGrow Revive kuru ve sıvı, M5 Micromix, Boron Plus, iGrow V, Alga ve LignoGro ambalajları ve teknik föyleri.'],
+    ['Uzman görüşmesi', 'Ligno OÜ ürün geliştirme ekibi ve AgriPak ziraat mühendisleriyle bitkinize özel uygulama programı.'],
+    ['Deneme sonuçları', 'Farklı ülkelerden saha denemeleri ve sera uygulama verileri, metodolojisiyle birlikte.'],
+    ['Bayilik görüşmeleri', 'Akdeniz ve Ege bölgeleri için bayi ağı, stok ve destek modeli. Randevu için önceden yazın.'],
+  ],
+  h2: 'Pratik bilgiler',
+  info: [['Tarih', '24-27 Kasım 2026'], ['Yer', 'Anfaş Expo Center, Antalya'], ['Salon / Stant', '3-H130'], ['Randevu', 'sales@agripak.pro · +90 530 633 75 27']],
+  cta: 'Davetiye isteyin',
+} : {
+  lead: '25th International Greenhouse, Agricultural Technologies and Livestock Equipment Exhibition. 24-27 November 2026, Anfaş Expo Center, Antalya. Joint Ligno OÜ and AgriPak Kimya booth: 3-H130.',
+  h1: 'What awaits you at the booth',
+  items: [
+    ['Product showcase', 'iGrow Revive dry and liquid, M5 Micromix, Boron Plus, iGrow V, Alga and LignoGro packaging and data sheets.'],
+    ['Expert meetings', 'A crop specific application programme with the Ligno OÜ product development team and AgriPak agronomists.'],
+    ['Trial results', 'Field trials from different countries and greenhouse application data, with methodology.'],
+    ['Dealership talks', 'Dealer network, stock and support model for the Mediterranean and Aegean regions. Write ahead for an appointment.'],
+  ],
+  h2: 'Practical information',
+  info: [['Dates', '24-27 November 2026'], ['Venue', 'Anfaş Expo Center, Antalya'], ['Hall / Booth', '3-H130'], ['Appointments', 'sales@agripak.pro · +90 530 633 75 27']],
+  cta: 'Request an invitation',
+};
+---
+<Base lang={lang} title={title} description={c.lead} altPath={altPath} current="growtech">
+  <section class="hero" style="min-height:min(70dvh,44rem)">
+    <div class="hero-media">
+      <picture><source srcset={u('img/photo/greenhouse_pepper.webp')} type="image/webp" /><img src={u('img/photo/greenhouse_pepper.jpg')} alt="" width="1536" height="864" fetchpriority="high" /></picture>
+    </div>
+    <div class="container hero-inner">
+      <span class="hero-badge reveal"><i>3-H130</i>{t(lang, 'gt.date')}</span>
+      <h1 class="reveal" style="--d:120ms; font-size:var(--step-4)">{title}</h1>
+      <p class="lead reveal" style="--d:220ms">{c.lead}</p>
+      <div class="hero-actions reveal" style="--d:320ms"><a class="btn btn-primary" href={u(route(lang, 'contact'))}>{c.cta}<Icon name="arrow" /></a></div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal"><h2>{c.h1}</h2></div>
+      <div class="grid grid-2">
+        {c.items.map(([h, d], i) => (<article class="card reveal" style={`--d:${i * 80}ms`}><span class="icon"><Icon name={['leaf', 'phone', 'lab', 'globe'][i]} /></span><h3>{h}</h3><p>{d}</p></article>))}
+      </div>
+    </div>
+  </section>
+  <section class="section sand-bg">
+    <div class="container split" style="align-items:start">
+      <div class="prose reveal">
+        <h2>{c.h2}</h2>
+        <table class="spec" style="background:#fff"><tbody>{c.info.map(([k, v]) => (<tr><th>{k}</th><td>{v}</td></tr>))}</tbody></table>
+      </div>
+      <div class="media wide reveal-scale">
+        <picture><source srcset={u('img/photo/aerial_antalya.webp')} type="image/webp" /><img src={u('img/photo/aerial_antalya.jpg')} alt="Antalya" width="1536" height="864" loading="lazy" /></picture>
+      </div>
+    </div>
+  </section>
+</Base>

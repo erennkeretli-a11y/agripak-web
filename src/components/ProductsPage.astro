@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from './Icon.astro';
+import { t, route, type Lang } from '../i18n/ui';
+import { products, productUrl } from '../data/products';
+import { u } from '../lib/url';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const altPath = lang === 'tr' ? '/en/products/' : '/urunler/';
+const title = lang === 'tr' ? 'Ürünler' : 'Products';
+const lead = lang === 'tr'
+  ? 'Ligno OÜ iGrow serisi: humik ve fulvik asit bazlı biyostimülantlar, mikro element kompleksleri ve alg özlü kök aktivatörleri. Türkiye tescili ürün ürün ilerliyor; ilk iki ürün iGrow Revive kuru ve sıvı.'
+  : 'The Ligno OÜ iGrow range: humic and fulvic acid based biostimulants, micronutrient complexes and seaweed root activators. Turkish registration advances product by product; the first two are iGrow Revive dry and liquid.';
+---
+<Base lang={lang} title={title} description={lead} altPath={altPath} current="products">
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href={u(route(lang, 'home'))}>{t(lang, 'crumb.home')}</a><span>/</span><span>{title}</span></nav>
+      <h1 class="reveal">{title}</h1>
+      <p class="lead reveal" style="--d:100ms; max-width:48rem">{lead}</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="grid grid-3">
+        {products.map((p, i) => (
+          <a class="pcard reveal" style={`--d:${(i % 3) * 80}ms`} href={u(productUrl(lang, p))}>
+            <span class={`tag ${p.status === 'soon' ? 'soon' : ''}`}>{p.status === 'first' ? t(lang, 'port.first') : t(lang, 'port.soon')}</span>
+            <div class="pcard-media"><img src={u(p.image)} alt={p.name} loading="lazy" decoding="async" /></div>
+            <div class="pcard-body">
+              <h3>{p.name} <span class="muted" style="font-weight:500">· {p.form[lang].split(',')[0]}</span></h3>
+              <p>{p.short[lang]}</p>
+              <span class="link">{t(lang, 'port.detail')}<Icon name="arrow" /></span>
+            </div>
+          </a>
+        ))}
+      </div>
+      <div class="notice reveal" style="margin-top:var(--space-l)">
+        <Icon name="info" />
+        <p>{t(lang, 'prod.notice')}</p>
+      </div>
+    </div>
+  </section>
+</Base>

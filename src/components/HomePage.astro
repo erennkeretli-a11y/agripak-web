@@ -1,0 +1,252 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from './Icon.astro';
+import { t, route, type Lang } from '../i18n/ui';
+import { products, productUrl } from '../data/products';
+import { u } from '../lib/url';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const altPath = lang === 'tr' ? '/en/' : '/';
+const first = products.filter((p) => p.status === 'first');
+const rest = products.filter((p) => p.status === 'soon');
+const why = [
+  { icon: 'root', t: t(lang, 'why.1.t'), d: t(lang, 'why.1.d') },
+  { icon: 'drop', t: t(lang, 'why.2.t'), d: t(lang, 'why.2.d') },
+  { icon: 'shield', t: t(lang, 'why.3.t'), d: t(lang, 'why.3.d') },
+  { icon: 'soil', t: t(lang, 'why.4.t'), d: t(lang, 'why.4.d') },
+];
+const proc = [
+  { icon: 'factory', t: t(lang, 'proc.1.t'), d: t(lang, 'proc.1.d') },
+  { icon: 'lab', t: t(lang, 'proc.2.t'), d: t(lang, 'proc.2.d') },
+  { icon: 'stamp', t: t(lang, 'proc.3.t'), d: t(lang, 'proc.3.d') },
+  { icon: 'truck', t: t(lang, 'proc.4.t'), d: t(lang, 'proc.4.d') },
+];
+const strip = ['strip.1', 'strip.2', 'strip.3', 'strip.4', 'strip.5'] as const;
+const titleWords = t(lang, 'hero.title');
+---
+<Base lang={lang} altPath={altPath} current="home">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-media">
+      <picture>
+        <source srcset={u('img/photo/hero_greenhouse.webp')} type="image/webp" />
+        <img src={u('img/photo/hero_greenhouse.jpg')} alt="" width="1792" height="896" fetchpriority="high" decoding="async" />
+      </picture>
+    </div>
+    <div class="container hero-inner">
+      <span class="hero-badge reveal"><i>GT</i>{t(lang, 'hero.badge')}</span>
+      <span class="eyebrow on-dark reveal" style="--d:80ms">{t(lang, 'hero.eyebrow')}</span>
+      <h1 class="reveal" style="--d:160ms" set:html={titleWords} />
+      <p class="lead reveal" style="--d:260ms">{t(lang, 'hero.lead')}</p>
+      <div class="hero-actions reveal" style="--d:360ms">
+        <a class="btn btn-primary" href={u(route(lang, 'products'))}>{t(lang, 'hero.cta1')}<Icon name="arrow" /></a>
+        <a class="btn btn-ghost" href={u(route(lang, 'contact'))}>{t(lang, 'hero.cta2')}</a>
+      </div>
+    </div>
+    <div class="hero-scroll">{t(lang, 'hero.scroll')}</div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <div class="strip" aria-hidden="true">
+    <div class="marquee">
+      {[0, 1].map(() => (
+        <ul>
+          <li><img src={u('img/brand/igrow-logo.svg')} alt="iGrow" /></li>
+          {strip.map((k) => (<li><span class="dot"></span>{t(lang, k)}</li>))}
+        </ul>
+      ))}
+    </div>
+  </div>
+
+  <!-- WHY -->
+  <section class="section">
+    <div class="container">
+      <div class="split" style="align-items:start">
+        <div>
+          <div class="section-head reveal">
+            <span class="eyebrow">{t(lang, 'why.eyebrow')}</span>
+            <h2>{t(lang, 'why.title')}</h2>
+            <p class="lead">{t(lang, 'why.lead')}</p>
+          </div>
+          <div class="grid grid-2">
+            {why.map((w, i) => (
+              <article class="card reveal" style={`--d:${i * 90}ms`}>
+                <span class="icon"><Icon name={w.icon} /></span>
+                <h3>{w.t}</h3>
+                <p>{w.d}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+        <div class="media tall reveal-scale">
+          <picture>
+            <source srcset={u('img/photo/roots_seedling.webp')} type="image/webp" />
+            <img src={u('img/photo/roots_seedling.jpg')} alt={lang === 'tr' ? 'Sağlıklı kök sistemi' : 'Healthy root system'} width="1344" height="1008" loading="lazy" decoding="async" />
+          </picture>
+          <span class="caption">{lang === 'tr' ? 'Humik ve fulvik asit: kök saçaklanması' : 'Humic and fulvic acids: root branching'}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOWCASE (sticky) -->
+  <section class="section sand-bg">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">{t(lang, 'show.eyebrow')}</span>
+        <h2>{t(lang, 'show.title')}</h2>
+        <p class="lead">{t(lang, 'show.lead')}</p>
+      </div>
+      <div class="showcase">
+        <div class="showcase-sticky">
+          <span class="orb"></span>
+          {first.map((p, i) => (<img src={u(p.image)} alt={p.name} class={i === 0 ? 'is-active' : ''} loading="lazy" decoding="async" />))}
+        </div>
+        <div class="showcase-steps">
+          {first.map((p, i) => (
+            <article class={`showcase-step ${i === 0 ? 'is-active' : ''}`} data-step={i}>
+              <span class="num">0{i + 1} · {p.form[lang].toUpperCase()}</span>
+              <h3>{p.name} <span class="muted" style="font-weight:500">{lang === 'tr' ? (i === 0 ? 'Kuru' : 'Sıvı') : (i === 0 ? 'Dry' : 'Liquid')}</span></h3>
+              <p class="muted">{p.intro[lang]}</p>
+              <ul>
+                {p.benefits.slice(0, 4).map((b) => (<li>{b[lang]}</li>))}
+              </ul>
+              <div style="margin-top:.5rem"><a class="btn btn-dark" href={u(productUrl(lang, p))}>{t(lang, 'port.detail')}<Icon name="arrow" /></a></div>
+            </article>
+          ))}
+          <div class="showcase-step" data-step={first.length - 1} style="border:0; padding-left:0">
+            <a class="btn btn-ghost" style="color:var(--ink)" href={u(route(lang, 'products'))}>{t(lang, 'show.all')}<Icon name="arrow" /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">{t(lang, 'port.eyebrow')}</span>
+        <h2>{t(lang, 'port.title')}</h2>
+        <p class="lead">{t(lang, 'port.lead')}</p>
+      </div>
+      <div class="grid grid-3">
+        {rest.map((p, i) => (
+          <a class="pcard reveal" style={`--d:${i * 70}ms`} href={u(productUrl(lang, p))}>
+            <span class="tag soon">{t(lang, 'port.soon')}</span>
+            <div class="pcard-media"><img src={u(p.image)} alt={p.name} loading="lazy" decoding="async" /></div>
+            <div class="pcard-body">
+              <h3>{p.name}</h3>
+              <p>{p.short[lang]}</p>
+              <span class="link">{t(lang, 'port.detail')}<Icon name="arrow" /></span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section dark">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow on-dark">{t(lang, 'proc.eyebrow')}</span>
+        <h2 style="color:#fff">{t(lang, 'proc.title')}</h2>
+      </div>
+      <div class="steps">
+        {proc.map((s, i) => (
+          <article class="step reveal" style={`--d:${i * 100}ms; background:rgba(255,255,255,.05)`}>
+            <span class="icon" style="color:var(--leaf)"><Icon name={s.icon} class="step-icon" /></span>
+            <h3 style="color:#fff">{s.t}</h3>
+            <p>{s.d}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / STATS -->
+  <section class="section">
+    <div class="container split">
+      <div class="media wide reveal-scale">
+        <picture>
+          <source srcset={u('img/photo/aerial_antalya.webp')} type="image/webp" />
+          <img src={u('img/photo/aerial_antalya.jpg')} alt="Antalya" width="1536" height="864" loading="lazy" decoding="async" />
+        </picture>
+        <span class="caption">Antalya</span>
+      </div>
+      <div>
+        <div class="section-head reveal">
+          <span class="eyebrow">{t(lang, 'about.eyebrow')}</span>
+          <h2>{t(lang, 'about.title')}</h2>
+          <p class="lead">{t(lang, 'about.lead')}</p>
+          <div><a class="btn btn-dark" href={u(route(lang, 'about'))}>{t(lang, 'about.cta')}<Icon name="arrow" /></a></div>
+        </div>
+        <div class="stats reveal">
+          <div class="stat"><b data-count={t(lang, 'stat.1.b')}>{t(lang, 'stat.1.b')}</b><span>{t(lang, 'stat.1.s')}</span></div>
+          <div class="stat"><b data-count={t(lang, 'stat.2.b')}>{t(lang, 'stat.2.b')}</b><span>{t(lang, 'stat.2.s')}</span></div>
+          <div class="stat"><b>{t(lang, 'stat.3.b')}</b><span>{t(lang, 'stat.3.s')}</span></div>
+          <div class="stat"><b>{t(lang, 'stat.4.b')}</b><span>{t(lang, 'stat.4.s')}</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GROWTECH CTA -->
+  <section class="section-tight">
+    <div class="container">
+      <div class="cta-band reveal-scale">
+        <div class="bgimg">
+          <picture>
+            <source srcset={u('img/photo/dark_soil_texture.webp')} type="image/webp" />
+            <img src={u('img/photo/dark_soil_texture.jpg')} alt="" width="1792" height="896" loading="lazy" decoding="async" />
+          </picture>
+        </div>
+        <div class="grid" style="gap:var(--space-s); max-width:44rem">
+          <span class="date"><Icon name="calendar" /> {t(lang, 'gt.date')}</span>
+          <h2>{t(lang, 'gt.title')}</h2>
+          <p class="lead" style="color:rgba(255,255,255,.8)">{t(lang, 'gt.lead')}</p>
+          <div class="hero-actions" style="margin-top:.5rem">
+            <a class="btn btn-primary" href={u(route(lang, 'contact'))}>{t(lang, 'gt.cta')}<Icon name="arrow" /></a>
+            <a class="btn btn-ghost" href={u(route(lang, 'growtech'))}>{t(lang, 'gt.cta2')}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="container split" style="align-items:start">
+      <div class="section-head reveal">
+        <span class="eyebrow">{t(lang, 'contact.eyebrow')}</span>
+        <h2>{t(lang, 'contact.title')}</h2>
+        <p class="lead">{t(lang, 'contact.lead')}</p>
+        <div class="grid grid-2" style="margin-top:var(--space-s)">
+          <div class="contact-card"><small>{t(lang, 'contact.phone')}</small><a href="https://wa.me/905306337527">+90 530 633 75 27</a></div>
+          <div class="contact-card"><small>{t(lang, 'contact.mail')}</small><a href="mailto:sales@agripak.pro">sales@agripak.pro</a></div>
+          <div class="contact-card"><small>{t(lang, 'contact.addr')}</small><span>Güzeloba Mah. Çağlayangil Cad. No: 3B, Muratpaşa / Antalya</span></div>
+          <div class="contact-card"><small>{t(lang, 'contact.hours')}</small><span>{t(lang, 'contact.hours.v')}</span></div>
+        </div>
+      </div>
+      <form class="form card reveal" action="https://formspree.io/f/agripak-demo" method="post" style="--d:120ms">
+        <div class="form-row">
+          <label>{t(lang, 'form.name')}<input name="name" required /></label>
+          <label>{t(lang, 'form.company')}<input name="company" /></label>
+        </div>
+        <div class="form-row">
+          <label>{t(lang, 'form.phone')}<input name="phone" type="tel" required /></label>
+          <label>{t(lang, 'form.email')}<input name="email" type="email" /></label>
+        </div>
+        <div class="form-row">
+          <label>{t(lang, 'form.crop')}<input name="crop" /></label>
+          <label>{t(lang, 'form.area')}<input name="area" inputmode="numeric" /></label>
+        </div>
+        <label>{t(lang, 'form.msg')}<textarea name="message" rows="4"></textarea></label>
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+        <button class="btn btn-primary" type="submit">{t(lang, 'form.send')}<Icon name="arrow" /></button>
+        <small class="muted">{t(lang, 'form.kvkk')}</small>
+      </form>
+    </div>
+  </section>
+</Base>
