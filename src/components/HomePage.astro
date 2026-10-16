@@ -34,7 +34,7 @@ const titleWords = t(lang, 'hero.title');
       </picture>
     </div>
     <div class="container hero-inner">
-      <span class="hero-badge reveal"><i>GT</i>{t(lang, 'hero.badge')}</span>
+      <span class="hero-badge reveal"><i><Icon name="calendar" /></i>{t(lang, 'hero.badge')}</span>
       <span class="eyebrow on-dark reveal" style="--d:80ms">{t(lang, 'hero.eyebrow')}</span>
       <h1 class="reveal" style="--d:160ms" set:html={titleWords} />
       <p class="lead reveal" style="--d:260ms">{t(lang, 'hero.lead')}</p>
@@ -43,7 +43,6 @@ const titleWords = t(lang, 'hero.title');
         <a class="btn btn-ghost" href={u(route(lang, 'contact'))}>{t(lang, 'hero.cta2')}</a>
       </div>
     </div>
-    <div class="hero-scroll">{t(lang, 'hero.scroll')}</div>
   </section>
 
   <!-- TRUST STRIP -->

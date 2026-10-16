@@ -53,8 +53,8 @@ export const products: Product[] = [
     ],
     benefits: [
       m('Derin ve dallanmış kök sistemi; bitki toprağa daha iyi tutunur ve beslenir.', 'Deep, branched root system; the plant anchors and feeds better.', 'Глубокая разветвлённая корневая система; растение лучше закрепляется и питается.'),
-      m('Su ve besin elementlerinin alım verimliliği artar, girdi israfı azalır.', 'Improved uptake efficiency of water and nutrients, less input waste.', 'Повышается эффективность усвоения воды и питательных элементов, меньше потерь.'),
-      m('Faydalı toprak mikroorganizmalarını besler, toprak yaşamını canlandırır.', 'Feeds beneficial soil microorganisms, revives soil life.', 'Питает полезные почвенные микроорганизмы, оживляет почву.'),
+      m('Su ve besin elementlerinin alım verimliliği artar, girdi israfı azalır.', 'Improved uptake efficiency of water and nutrients, less input waste.', 'Большая часть воды и питательных элементов усваивается растением, меньше потерь.'),
+      m('Faydalı toprak mikroorganizmalarını besler, toprak yaşamını canlandırır.', 'Feeds beneficial soil microorganisms, revives soil life.', 'Стимулирует полезные почвенные микроорганизмы, оживляет почву.'),
       m('Kuraklık ve diğer abiyotik stres dönemlerinde dayanıklılık.', 'Resilience during drought and other abiotic stress periods.', 'Устойчивость в периоды засухи и другого абиотического стресса.'),
       m('Klorofil üretimi ve fotosentez hızı yükselir, gelişme süresi kısalır.', 'Higher chlorophyll production and photosynthesis rate, shorter development time.', 'Выше выработка хлорофилла и скорость фотосинтеза, короче период развития.'),
       m('Bitki koruma uygulamalarıyla uyumlu, tank karışımına girer.', 'Compatible with plant protection applications, suitable for tank mixes.', 'Совместим со средствами защиты растений, подходит для баковых смесей.'),
@@ -92,9 +92,8 @@ export const products: Product[] = [
     ],
     benefits: [
       m('Damla sulama hattına doğrudan dozlanır, ek karıştırma gerektirmez.', 'Dosed directly into the drip line, no extra mixing needed.', 'Дозируется напрямую в капельную линию, не требует дополнительного перемешивания.'),
-      m('Yaprak yüzeyinden hızlı alım; stres sonrası toparlanmayı hızlandırır.', 'Rapid uptake through the leaf surface; speeds up recovery after stress.', 'Быстрое усвоение через лист; ускоряет восстановление после стресса.'),
+      m('Yaprak yüzeyinden hızlı alım; stres sonrası toparlanmayı hızlandırır.', 'Rapid uptake through the leaf surface; speeds up recovery after stress.', 'Быстрое листовое усвоение; ускоряет восстановление после стресса.'),
       m('Kök bölgesinde besin elementlerinin alınabilirliğini artırır.', 'Increases nutrient availability in the root zone.', 'Повышает доступность элементов питания в корневой зоне.'),
-      m('Bitki koruma ürünlerinin etkinliğini destekler.', 'Supports the efficacy of plant protection products.', 'Повышает эффективность средств защиты растений.'),
       m('Sera, bağ, meyve bahçesi ve tarla bitkilerinde kullanılır.', 'Used in greenhouses, vineyards, orchards and field crops.', 'Применяется в теплицах, виноградниках, садах и полевых культурах.'),
     ],
     apps: [
