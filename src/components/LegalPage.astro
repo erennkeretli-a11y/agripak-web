@@ -1,49 +1,54 @@
 ---
 import Base from '../layouts/Base.astro';
-import { t, route, type Lang } from '../i18n/ui';
+import { t, route, routePaths, type Lang } from '../i18n/ui';
 import { u } from '../lib/url';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
-const tr = lang === 'tr';
-const altPath = tr ? '/en/privacy/' : '/kvkk/';
-const title = tr ? 'KVKK Aydınlatma Metni ve Gizlilik' : 'Privacy Notice';
+const paths = routePaths('legal');
+const content = {
+  tr: {
+    title: 'KVKK Aydınlatma Metni ve Gizlilik',
+    sections: [
+      ['Veri sorumlusu', 'AGRİPAK KİMYA ANONİM ŞİRKETİ (Güzeloba Mah. Çağlayangil Cad. No: 3B Muratpaşa / Antalya, MERSİS 0009178097300001), 6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında veri sorumlusudur.'],
+      ['İşlenen veriler ve amaç', 'İletişim formu, e-posta veya WhatsApp üzerinden ilettiğiniz ad soyad, firma, telefon, e-posta, bitki ve alan bilgileri; teklif hazırlama, numune gönderimi, bayilik değerlendirmesi ve teknik destek amaçlarıyla, sözleşmenin kurulması ve meşru menfaat hukuki sebeplerine dayanarak işlenir.'],
+      ['Aktarım', 'Veriler yalnızca hizmetin gerektirdiği ölçüde kargo, muhasebe ve bilgi teknolojileri tedarikçileriyle paylaşılır. İletişim formu altyapısı yurt dışında barındırılan bir servis tarafından sağlanmaktadır; formu göndererek bu aktarımı kabul etmiş olursunuz.'],
+      ['Çerezler', 'Bu site üçüncü taraf reklam veya izleme çerezi kullanmaz. Yalnızca sitenin çalışması için zorunlu teknik çerezler kullanılabilir.'],
+      ['Haklarınız', 'KVKK madde 11 kapsamındaki haklarınızı erengm@agripak.pro adresine yazarak kullanabilirsiniz. Başvurular en geç 30 gün içinde yanıtlanır.'],
+    ],
+  },
+  en: {
+    title: 'Privacy Notice',
+    sections: [
+      ['Data controller', 'AGRİPAK KİMYA ANONİM ŞİRKETİ (Güzeloba Mah. Çağlayangil Cad. No: 3B Muratpaşa / Antalya, MERSİS 0009178097300001) is the data controller under the Turkish Personal Data Protection Law No. 6698.'],
+      ['Data processed and purpose', 'Name, company, phone, e-mail, crop and area details you send through the contact form, e-mail or WhatsApp are processed for preparing quotes, sending samples, evaluating dealerships and providing technical support, based on the conclusion of a contract and legitimate interest.'],
+      ['Transfers', 'Data is shared only to the extent required with courier, accounting and IT suppliers. The contact form infrastructure is provided by a service hosted abroad; by submitting the form you accept this transfer.'],
+      ['Cookies', 'This site does not use third party advertising or tracking cookies. Only technical cookies strictly necessary for the site to function may be used.'],
+      ['Your rights', 'You can exercise your rights under Article 11 of the Law by writing to erengm@agripak.pro. Requests are answered within 30 days at the latest.'],
+    ],
+  },
+  ru: {
+    title: 'Уведомление о персональных данных',
+    sections: [
+      ['Оператор данных', 'AGRİPAK KİMYA ANONİM ŞİRKETİ (Güzeloba Mah. Çağlayangil Cad. No: 3B Muratpaşa / Antalya, MERSİS 0009178097300001) является оператором персональных данных в соответствии с Законом Турции № 6698 о защите персональных данных.'],
+      ['Обрабатываемые данные и цели', 'Имя, компания, телефон, электронная почта, культура и площадь, которые вы передаёте через форму обратной связи, электронную почту или WhatsApp, обрабатываются для подготовки предложений, отправки образцов, оценки дилерства и технической поддержки на основании заключения договора и законного интереса.'],
+      ['Передача', 'Данные передаются только в необходимом объёме курьерским, бухгалтерским и ИТ-поставщикам. Инфраструктура формы обратной связи предоставляется сервисом, размещённым за рубежом; отправляя форму, вы соглашаетесь с такой передачей.'],
+      ['Файлы cookie', 'Сайт не использует сторонние рекламные или отслеживающие cookie. Могут использоваться только технические cookie, необходимые для работы сайта.'],
+      ['Ваши права', 'Права, предусмотренные статьёй 11 Закона, можно реализовать, написав на erengm@agripak.pro. Ответ предоставляется не позднее 30 дней.'],
+    ],
+  },
+} as const;
+const c = content[lang];
 ---
-<Base lang={lang} title={title} altPath={altPath}>
+<Base lang={lang} title={c.title} paths={paths}>
   <section class="page-hero">
     <div class="container">
-      <nav class="breadcrumb"><a href={u(route(lang, 'home'))}>{t(lang, 'crumb.home')}</a><span>/</span><span>{title}</span></nav>
-      <h1 class="reveal">{title}</h1>
+      <nav class="breadcrumb"><a href={u(route(lang, 'home'))}>{t(lang, 'crumb.home')}</a><span>/</span><span>{c.title}</span></nav>
+      <h1 class="reveal">{c.title}</h1>
     </div>
   </section>
   <section class="section">
     <div class="container prose" style="max-width:48rem">
-      {tr ? (
-        <>
-          <h2>Veri sorumlusu</h2>
-          <p>AGRİPAK KİMYA ANONİM ŞİRKETİ (Güzeloba Mah. Çağlayangil Cad. No: 3B Muratpaşa / Antalya, MERSİS 0009178097300001), 6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında veri sorumlusudur.</p>
-          <h2>İşlenen veriler ve amaç</h2>
-          <p>İletişim formu, e-posta veya WhatsApp üzerinden ilettiğiniz ad soyad, firma, telefon, e-posta, bitki ve alan bilgileri; teklif hazırlama, numune gönderimi, bayilik değerlendirmesi ve teknik destek amaçlarıyla, sözleşmenin kurulması ve meşru menfaat hukuki sebeplerine dayanarak işlenir.</p>
-          <h2>Aktarım</h2>
-          <p>Veriler yalnızca hizmetin gerektirdiği ölçüde kargo, muhasebe ve bilgi teknolojileri tedarikçileriyle paylaşılır. İletişim formu altyapısı yurt dışında barındırılan bir servis tarafından sağlanmaktadır; formu göndererek bu aktarımı kabul etmiş olursunuz.</p>
-          <h2>Çerezler</h2>
-          <p>Bu site üçüncü taraf reklam veya izleme çerezi kullanmaz. Yalnızca sitenin çalışması için zorunlu teknik çerezler kullanılabilir.</p>
-          <h2>Haklarınız</h2>
-          <p>KVKK madde 11 kapsamındaki haklarınızı erengm@agripak.pro adresine yazarak kullanabilirsiniz. Başvurular en geç 30 gün içinde yanıtlanır.</p>
-        </>
-      ) : (
-        <>
-          <h2>Data controller</h2>
-          <p>AGRİPAK KİMYA ANONİM ŞİRKETİ (Güzeloba Mah. Çağlayangil Cad. No: 3B Muratpaşa / Antalya, MERSİS 0009178097300001) is the data controller under the Turkish Personal Data Protection Law No. 6698.</p>
-          <h2>Data processed and purpose</h2>
-          <p>Name, company, phone, e-mail, crop and area details you send through the contact form, e-mail or WhatsApp are processed for preparing quotes, sending samples, evaluating dealerships and providing technical support, based on the conclusion of a contract and legitimate interest.</p>
-          <h2>Transfers</h2>
-          <p>Data is shared only to the extent required with courier, accounting and IT suppliers. The contact form infrastructure is provided by a service hosted abroad; by submitting the form you accept this transfer.</p>
-          <h2>Cookies</h2>
-          <p>This site does not use third party advertising or tracking cookies. Only technical cookies strictly necessary for the site to function may be used.</p>
-          <h2>Your rights</h2>
-          <p>You can exercise your rights under Article 11 of the Law by writing to erengm@agripak.pro. Requests are answered within 30 days at the latest.</p>
-        </>
-      )}
+      {c.sections.map(([h, p]) => (<><h2>{h}</h2><p>{p}</p></>))}
     </div>
   </section>
 </Base>

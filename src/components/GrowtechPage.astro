@@ -1,40 +1,56 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from './Icon.astro';
-import { t, route, type Lang } from '../i18n/ui';
+import { t, route, routePaths, type Lang } from '../i18n/ui';
 import { u } from '../lib/url';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
-const tr = lang === 'tr';
-const altPath = tr ? '/en/growtech-2026/' : '/growtech-2026/';
+const paths = routePaths('growtech');
 const title = 'Growtech Antalya 2026';
-const c = tr ? {
-  lead: '25. Uluslararası Sera, Tarım Teknolojileri ve Hayvancılık Ekipmanları Fuarı. 24-27 Kasım 2026, Anfaş Expo Center, Antalya. Ligno OÜ ve AgriPak Kimya ortak standı: 3-H130.',
-  h1: 'Stantta sizi neler bekliyor',
-  items: [
-    ['Ürün vitrini', 'iGrow Revive kuru ve sıvı, M5 Micromix, Boron Plus, iGrow V, Alga ve LignoGro ambalajları ve teknik föyleri.'],
-    ['Uzman görüşmesi', 'Ligno OÜ ürün geliştirme ekibi ve AgriPak ziraat mühendisleriyle bitkinize özel uygulama programı.'],
-    ['Deneme sonuçları', 'Farklı ülkelerden saha denemeleri ve sera uygulama verileri, metodolojisiyle birlikte.'],
-    ['Bayilik görüşmeleri', 'Akdeniz ve Ege bölgeleri için bayi ağı, stok ve destek modeli. Randevu için önceden yazın.'],
-  ],
-  h2: 'Pratik bilgiler',
-  info: [['Tarih', '24-27 Kasım 2026'], ['Yer', 'Anfaş Expo Center, Antalya'], ['Salon / Stant', '3-H130'], ['Randevu', 'sales@agripak.pro · +90 530 633 75 27']],
-  cta: 'Davetiye isteyin',
-} : {
-  lead: '25th International Greenhouse, Agricultural Technologies and Livestock Equipment Exhibition. 24-27 November 2026, Anfaş Expo Center, Antalya. Joint Ligno OÜ and AgriPak Kimya booth: 3-H130.',
-  h1: 'What awaits you at the booth',
-  items: [
-    ['Product showcase', 'iGrow Revive dry and liquid, M5 Micromix, Boron Plus, iGrow V, Alga and LignoGro packaging and data sheets.'],
-    ['Expert meetings', 'A crop specific application programme with the Ligno OÜ product development team and AgriPak agronomists.'],
-    ['Trial results', 'Field trials from different countries and greenhouse application data, with methodology.'],
-    ['Dealership talks', 'Dealer network, stock and support model for the Mediterranean and Aegean regions. Write ahead for an appointment.'],
-  ],
-  h2: 'Practical information',
-  info: [['Dates', '24-27 November 2026'], ['Venue', 'Anfaş Expo Center, Antalya'], ['Hall / Booth', '3-H130'], ['Appointments', 'sales@agripak.pro · +90 530 633 75 27']],
-  cta: 'Request an invitation',
-};
+const content = {
+  tr: {
+    lead: '25. Uluslararası Sera, Tarım Teknolojileri ve Hayvancılık Ekipmanları Fuarı. 24-27 Kasım 2026, Anfaş Expo Center, Antalya. Ligno OÜ ve AgriPak Kimya ortak standı: 3-H130.',
+    h1: 'Stantta sizi neler bekliyor',
+    items: [
+      ['Ürün vitrini', 'iGrow Revive kuru ve sıvı, M5 Micromix, Boron Plus, iGrow V, Alga ve LignoGro ambalajları ve teknik föyleri.'],
+      ['Uzman görüşmesi', 'Ligno OÜ ürün geliştirme ekibi ve AgriPak ziraat mühendisleriyle bitkinize özel uygulama programı.'],
+      ['Deneme sonuçları', 'Farklı ülkelerden saha denemeleri ve sera uygulama verileri, metodolojisiyle birlikte.'],
+      ['Bayilik görüşmeleri', 'Akdeniz ve Ege bölgeleri için bayi ağı, stok ve destek modeli. Randevu için önceden yazın.'],
+    ],
+    h2: 'Pratik bilgiler',
+    info: [['Tarih', '24-27 Kasım 2026'], ['Yer', 'Anfaş Expo Center, Antalya'], ['Salon / Stant', '3-H130'], ['Randevu', 'sales@agripak.pro · +90 530 633 75 27']],
+    cta: 'Davetiye isteyin',
+  },
+  en: {
+    lead: '25th International Greenhouse, Agricultural Technologies and Livestock Equipment Exhibition. 24-27 November 2026, Anfaş Expo Center, Antalya. Joint Ligno OÜ and AgriPak Kimya booth: 3-H130.',
+    h1: 'What awaits you at the booth',
+    items: [
+      ['Product showcase', 'iGrow Revive dry and liquid, M5 Micromix, Boron Plus, iGrow V, Alga and LignoGro packaging and data sheets.'],
+      ['Expert meetings', 'A crop specific application programme with the Ligno OÜ product development team and AgriPak agronomists.'],
+      ['Trial results', 'Field trials from different countries and greenhouse application data, with methodology.'],
+      ['Dealership talks', 'Dealer network, stock and support model for the Mediterranean and Aegean regions. Write ahead for an appointment.'],
+    ],
+    h2: 'Practical information',
+    info: [['Dates', '24-27 November 2026'], ['Venue', 'Anfaş Expo Center, Antalya'], ['Hall / Booth', '3-H130'], ['Appointments', 'sales@agripak.pro · +90 530 633 75 27']],
+    cta: 'Request an invitation',
+  },
+  ru: {
+    lead: '25-я Международная выставка тепличных и сельскохозяйственных технологий и животноводческого оборудования. 24-27 ноября 2026, Anfaş Expo Center, Анталия. Совместный стенд Ligno OÜ и AgriPak Kimya: 3-H130.',
+    h1: 'Что ждёт вас на стенде',
+    items: [
+      ['Витрина продукции', 'Упаковки и технические листы iGrow Revive сухой и жидкий, M5 Micromix, Boron Plus, iGrow V, Alga и LignoGro.'],
+      ['Встречи с экспертами', 'Программа применения под вашу культуру вместе с командой разработки Ligno OÜ и агрономами AgriPak.'],
+      ['Результаты испытаний', 'Полевые испытания из разных стран и данные применения в теплицах, с методикой.'],
+      ['Переговоры о дилерстве', 'Дилерская сеть, склад и модель поддержки для Средиземноморского и Эгейского регионов. Для встречи напишите заранее.'],
+    ],
+    h2: 'Практическая информация',
+    info: [['Даты', '24-27 ноября 2026'], ['Место', 'Anfaş Expo Center, Анталия'], ['Зал / стенд', '3-H130'], ['Встречи', 'sales@agripak.pro · +90 530 633 75 27']],
+    cta: 'Запросить приглашение',
+  },
+} as const;
+const c = content[lang];
 ---
-<Base lang={lang} title={title} description={c.lead} altPath={altPath} current="growtech">
+<Base lang={lang} title={title} description={c.lead} paths={paths} current="growtech">
   <section class="hero" style="min-height:min(70dvh,44rem)">
     <div class="hero-media">
       <picture><source srcset={u('img/photo/greenhouse_pepper.webp')} type="image/webp" /><img src={u('img/photo/greenhouse_pepper.jpg')} alt="" width="1536" height="864" fetchpriority="high" /></picture>

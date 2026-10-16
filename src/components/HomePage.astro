@@ -1,12 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from './Icon.astro';
-import { t, route, type Lang } from '../i18n/ui';
+import { t, route, routePaths, type Lang } from '../i18n/ui';
 import { products, productUrl } from '../data/products';
 import { u } from '../lib/url';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
-const altPath = lang === 'tr' ? '/en/' : '/';
+const paths = routePaths('home');
 const first = products.filter((p) => p.status === 'first');
 const rest = products.filter((p) => p.status === 'soon');
 const why = [
@@ -24,7 +24,7 @@ const proc = [
 const strip = ['strip.1', 'strip.2', 'strip.3', 'strip.4', 'strip.5'] as const;
 const titleWords = t(lang, 'hero.title');
 ---
-<Base lang={lang} altPath={altPath} current="home">
+<Base lang={lang} paths={paths} current="home">
   <!-- HERO -->
   <section class="hero">
     <div class="hero-media">
@@ -81,9 +81,9 @@ const titleWords = t(lang, 'hero.title');
         <div class="media tall reveal-scale">
           <picture>
             <source srcset={u('img/photo/roots_seedling.webp')} type="image/webp" />
-            <img src={u('img/photo/roots_seedling.jpg')} alt={lang === 'tr' ? 'Sağlıklı kök sistemi' : 'Healthy root system'} width="1344" height="1008" loading="lazy" decoding="async" />
+            <img src={u('img/photo/roots_seedling.jpg')} alt={t(lang, 'why.alt')} width="1344" height="1008" loading="lazy" decoding="async" />
           </picture>
-          <span class="caption">{lang === 'tr' ? 'Humik ve fulvik asit: kök saçaklanması' : 'Humic and fulvic acids: root branching'}</span>
+          <span class="caption">{t(lang, 'why.caption')}</span>
         </div>
       </div>
     </div>
@@ -106,7 +106,7 @@ const titleWords = t(lang, 'hero.title');
           {first.map((p, i) => (
             <article class={`showcase-step ${i === 0 ? 'is-active' : ''}`} data-step={i}>
               <span class="num">0{i + 1} · {p.form[lang].toUpperCase()}</span>
-              <h3>{p.name} <span class="muted" style="font-weight:500">{lang === 'tr' ? (i === 0 ? 'Kuru' : 'Sıvı') : (i === 0 ? 'Dry' : 'Liquid')}</span></h3>
+              <h3>{p.name} <span class="muted" style="font-weight:500">{p.formShort[lang]}</span></h3>
               <p class="muted">{p.intro[lang]}</p>
               <ul>
                 {p.benefits.slice(0, 4).map((b) => (<li>{b[lang]}</li>))}

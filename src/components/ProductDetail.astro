@@ -2,17 +2,16 @@
 import Base from '../layouts/Base.astro';
 import Icon from './Icon.astro';
 import { t, route, type Lang } from '../i18n/ui';
-import { products, productUrl, type Product } from '../data/products';
+import { products, productUrl, productPaths, type Product } from '../data/products';
 import { u } from '../lib/url';
 interface Props { lang: Lang; product: Product }
 const { lang, product: p } = Astro.props;
-const other: Lang = lang === 'tr' ? 'en' : 'tr';
-const altPath = productUrl(other, p);
+const paths = productPaths(p);
 const related = products.filter((x) => x !== p).slice(0, 3);
-const formLabel = p.form[lang].split(',')[0];
+const formLabel = p.formShort[lang];
 const docs = ['prod.tds', 'prod.sds', 'prod.coa', 'prod.label'] as const;
 ---
-<Base lang={lang} title={`${p.name} · ${formLabel}`} description={p.intro[lang]} altPath={altPath} current="products" ogImage={p.image.replace(/^\//, '')}>
+<Base lang={lang} title={`${p.name} · ${formLabel}`} description={p.intro[lang]} paths={paths} current="products" ogImage={p.image.replace(/^\//, '')}>
   <section class="page-hero">
     <div class="container">
       <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -77,7 +76,7 @@ const docs = ['prod.tds', 'prod.sds', 'prod.coa', 'prod.label'] as const;
         </div>
         <div class="card" style="background:var(--sand)">
           <img src={u('img/brand/igrow-logo.svg')} alt="iGrow" width="120" height="110" style="height:4.5rem; width:auto" />
-          <p>{lang === 'tr' ? 'iGrow, Ligno OÜ’nün (Tallinn, Estonya) tescilli markasıdır. Ürünler AB standartlarında üretilir ve analiz sertifikasıyla sevk edilir.' : 'iGrow is a registered trademark of Ligno OÜ (Tallinn, Estonia). Products are manufactured to EU standards and shipped with a certificate of analysis.'}</p>
+          <p>{t(lang, 'prod.brand')}</p>
         </div>
       </aside>
     </div>

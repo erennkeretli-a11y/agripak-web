@@ -2,15 +2,14 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { t, type Lang } from '../i18n/ui';
+import { t, langs, type Lang, type Paths } from '../i18n/ui';
 import { u } from '../lib/url';
-interface Props { lang: Lang; title?: string; description?: string; altPath?: string; current?: string; ogImage?: string }
-const { lang, title, description, altPath, current, ogImage } = Astro.props;
+interface Props { lang: Lang; title?: string; description?: string; paths: Paths; current?: string; ogImage?: string }
+const { lang, title, description, paths, current, ogImage } = Astro.props;
 const fullTitle = title ? `${title} | AgriPak Kimya` : t(lang, 'meta.title');
 const desc = description ?? t(lang, 'meta.desc');
 const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
 const canonical = site + Astro.url.pathname;
-const alt = altPath ? site + u(altPath) : undefined;
 const org = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
@@ -33,24 +32,27 @@ const org = {
     <meta name="theme-color" content="#15323a" />
     <link rel="icon" href={u('favicon.svg')} type="image/svg+xml" />
     <link rel="canonical" href={canonical} />
-    {alt && <link rel="alternate" hreflang={lang === 'tr' ? 'en' : 'tr'} href={alt} />}
-    <link rel="alternate" hreflang={lang} href={canonical} />
+    {langs.map((l) => (<link rel="alternate" hreflang={l} href={site + u(paths[l])} />))}
+    <link rel="alternate" hreflang="x-default" href={site + u(paths.tr)} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={desc} />
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content={lang === 'tr' ? 'tr_TR' : 'en_US'} />
+    <meta property="og:locale" content={{ tr: 'tr_TR', en: 'en_US', ru: 'ru_RU' }[lang]} />
     <meta property="og:image" content={site + u(ogImage ?? 'img/photo/hero_greenhouse.jpg')} />
     <link rel="preload" href={u('fonts/manrope-latin.woff2')} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={u('fonts/manrope-latin-ext.woff2')} as="font" type="font/woff2" crossorigin />
+    {lang === 'ru' && <link rel="preload" href={u('fonts/manrope-cyrillic.woff2')} as="font" type="font/woff2" crossorigin />}
     <style set:html={`
       @font-face{font-family:'Manrope';font-style:normal;font-weight:300 800;font-display:swap;src:url('${u('fonts/manrope-latin-ext.woff2')}') format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
       @font-face{font-family:'Manrope';font-style:normal;font-weight:300 800;font-display:swap;src:url('${u('fonts/manrope-latin.woff2')}') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+      @font-face{font-family:'Manrope';font-style:normal;font-weight:300 800;font-display:swap;src:url('${u('fonts/manrope-cyrillic.woff2')}') format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+      @font-face{font-family:'Manrope';font-style:normal;font-weight:300 800;font-display:swap;src:url('${u('fonts/manrope-cyrillic-ext.woff2')}') format('woff2');unicode-range:U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}
       @font-face{font-family:'Manrope Fallback';src:local('Arial');size-adjust:104%;ascent-override:95%;descent-override:25%;line-gap-override:0%}
     `} />
     <script type="application/ld+json" set:html={JSON.stringify(org)} />
   </head>
   <body>
-    <Header lang={lang} altPath={altPath} current={current} />
+    <Header lang={lang} paths={paths} current={current} />
     <main id="main">
       <slot />
     </main>

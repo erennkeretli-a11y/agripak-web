@@ -10,7 +10,7 @@ export default defineConfig({
   trailingSlash: 'always',
   i18n: {
     defaultLocale: 'tr',
-    locales: ['tr', 'en'],
+    locales: ['tr', 'en', 'ru'],
     routing: { prefixDefaultLocale: false },
   },
   build: { format: 'directory' },

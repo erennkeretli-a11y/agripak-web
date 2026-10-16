@@ -16,7 +16,7 @@ const year = new Date().getFullYear();
       <div>
         <h4>{t(lang, 'footer.products')}</h4>
         <ul>
-          {products.map((p) => (<li><a href={u(productUrl(lang, p))}>{p.name} · {p.form[lang].split(',')[0]}</a></li>))}
+          {products.map((p) => (<li><a href={u(productUrl(lang, p))}>{p.name} · {p.formShort[lang]}</a></li>))}
         </ul>
       </div>
       <div>
